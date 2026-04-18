@@ -315,9 +315,9 @@ export function DialogueNovel() {
             <Image src={avatarImg} alt="Yukisei IA" fill className="object-cover" sizes="128px" />
           </motion.div>
 
-          {/* Dialogue box */}
-          <div className={`flex-1 backdrop-blur-md border-[3px] p-3 md:p-6 mb-0 relative flex flex-col
-            h-[45svh] max-h-[340px] md:h-80 md:max-h-none
+          {/* Dialogue box — fixed height, never grows */}
+          <div className={`flex-1 min-w-0 backdrop-blur-md border-[3px] p-3 md:p-6 relative flex flex-col
+            h-[48svh] max-h-[360px] md:h-[320px] md:max-h-none overflow-hidden
             ${theme === 'sakura'
               ? 'bg-[#FFF5F5]/95 border-[#D13030] shadow-[4px_4px_0_rgba(209,48,48,0.3)] text-[#1A1A1A] rounded-lg'
               : 'bg-[#050505]/95 border-[var(--accent-primary)] shadow-[0_0_20px_rgba(0,255,255,0.3)] text-[var(--accent-primary)]'
@@ -330,25 +330,25 @@ export function DialogueNovel() {
               Yukisei
             </div>
 
-            {/* Chat history */}
+            {/* Chat history — scrollable, min-h-0 needed for overflow to work inside flex */}
             <div
               ref={scrollRef}
-              className={`flex-1 overflow-y-auto mb-4 text-sm md:text-base leading-relaxed flex flex-col gap-4 pr-2
+              className={`flex-1 min-h-0 overflow-y-auto mb-3 text-xs sm:text-sm md:text-base leading-relaxed flex flex-col gap-3 pr-1
                 ${theme === 'sakura' ? 'font-serif' : 'font-mono'}`}
-              style={{ scrollBehavior: 'smooth' }}
+              style={{ scrollBehavior: 'smooth', overscrollBehavior: 'contain' }}
             >
               {messages.map((msg, idx) => {
                 const isLast = idx === messages.length - 1;
                 if (msg.role === 'user') {
                   return (
-                    <div key={idx} className="self-end max-w-[80%] bg-black/10 p-2 rounded">
+                    <div key={idx} className="self-end max-w-[80%] bg-black/10 p-2 rounded break-words">
                       <span className="opacity-70 text-xs block mb-1">Tú:</span>
                       {msg.text}
                     </div>
                   );
                 }
                 return (
-                  <div key={idx} className="self-start max-w-[90%]">
+                  <div key={idx} className="self-start max-w-full break-words whitespace-pre-wrap">
                     {/* Welcome message uses typewriter displayedText; all others show full text */}
                     {isLast && isTyping && messages.length === 1 ? (
                       <>

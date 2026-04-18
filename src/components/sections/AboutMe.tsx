@@ -40,7 +40,7 @@ export function AboutMe() {
   const isNight = theme === 'neon';
 
   return (
-    <section id="about" ref={ref} className="relative flex flex-col justify-center min-h-screen py-32 px-6 bg-transparent z-10 w-full overflow-hidden">
+    <section id="about" ref={ref} className="relative flex flex-col justify-center min-h-screen py-24 px-4 sm:px-6 bg-transparent z-10 w-full overflow-hidden">
 
       <svg className="fixed h-0 w-0 pointer-events-none">
         <defs>
@@ -51,7 +51,7 @@ export function AboutMe() {
         </defs>
       </svg>
 
-      <div className="w-full max-w-[1200px] mx-auto relative grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+      <div className="w-full max-w-[1200px] mx-auto relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
 
         {/* ── Column 1: Text ── */}
         <motion.div style={{ y: yText }} className="flex flex-col justify-center relative z-20">

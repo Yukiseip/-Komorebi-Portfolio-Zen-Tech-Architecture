@@ -252,26 +252,30 @@ export function ProjectsSection() {
         </div>
 
         {/* Main title */}
-        <div className="relative overflow-hidden px-4">
+        <div className="relative overflow-hidden px-2 sm:px-4">
           <motion.h2
             initial={{ y: "110%" }}
             whileInView={{ y: 0 }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
-            className={`text-[5rem] md:text-[10rem] lg:text-[13rem] font-black uppercase leading-none
+            className={`font-black uppercase leading-none
               ${theme === 'sakura'
                 ? 'font-serif text-[#1A1A1A] tracking-tight'
                 : 'font-mono tracking-tighter'
               }`}
-            style={theme === 'neon' ? {
-              WebkitTextStroke: "2px var(--accent-primary)",
-              color: "transparent",
-              textShadow: "0 0 40px rgba(0,255,255,0.35)",
-            } : {}}
+            style={{
+              fontSize: "clamp(3rem, 16vw, 13rem)",
+              ...(theme === 'neon' ? {
+                WebkitTextStroke: "2px var(--accent-primary)",
+                color: "transparent",
+                textShadow: "0 0 40px rgba(0,255,255,0.35)",
+              } : {}),
+            }}
           >
             Archivo
           </motion.h2>
         </div>
+
 
         {/* Underline rule — centered under the two headings */}
         <motion.div

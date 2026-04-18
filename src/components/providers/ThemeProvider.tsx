@@ -14,14 +14,15 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("sakura");
+  // Read localStorage synchronously so there's no flash on first load.
+  // The function is only called once during initialization (lazy initializer).
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'sakura'; // SSR default
+    return (localStorage.getItem('theme') as Theme) ?? 'sakura';
+  });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") as Theme;
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
     setMounted(true);
   }, []);
 
