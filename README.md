@@ -153,7 +153,7 @@ Configura estas variables en **Settings → Environment Variables**:
 
 ## 👤 Sobre Francisco Calvo
 
-Ingeniero en Sistemas egresado del ITCR (Costa Rica), especializado en **IA aplicada y desarrollo Full Stack**. Construye productos en la intersección entre UX de calidad y backends eficientes.
+Ingeniero en Sistemas egresado de UVEG (México), especializado en **IA aplicada y desarrollo Full Stack**. Construye productos en la intersección entre UX de calidad y backends eficientes.
 
 📍 Costa Rica · [LinkedIn](https://www.linkedin.com/in/francisco-cr-50ba66401/) · [GitHub](https://github.com/Yukiseip)
 
