@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+:root {
+  /* Day Theme (Sakura) - Default */
+  --bg-primary: #F5F5F7;
+  --bg-secondary: #EBEBEF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #4A4A4A;
+  --accent-primary: #FFB7C5; /* Cherry Pink */
+  --accent-secondary: #E89EAD;
+}
+
+[data-theme="neon"] {
+  /* Night Theme (Neon) */
+  --bg-primary: #050505;
+  --bg-secondary: #111111;
+  --text-primary: #E0E0E0;
+  --text-secondary: #A0A0A0;
+  --accent-primary: #00FFFF; /* Cyan */
+  --accent-secondary: #FF00FF; /* Magenta */
+}
+
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+
+  /* Configure Fonts via Next.js CSS variables */
+  --font-serif: var(--font-noto-serif-jp), serif;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  overflow-x: hidden;
+}
+
+/* Base states depending on theme */
+:root {
+  font-family: var(--font-sans);
+}
+
+[data-theme="neon"] {
+  font-family: var(--font-mono);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
+
+[data-theme="neon"] h1, 
+[data-theme="neon"] h2, 
+[data-theme="neon"] h3, 
+[data-theme="neon"] h4, 
+[data-theme="neon"] h5, 
+[data-theme="neon"] h6 {
+  font-family: var(--font-mono);
+}
+
+/* Custom Effects */
+@layer utilities {
+  .text-glow-cyan {
+    text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;
+  }
+  .text-glow-magenta {
+    text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+  }
+}
