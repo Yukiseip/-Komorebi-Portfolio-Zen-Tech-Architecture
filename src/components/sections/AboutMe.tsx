@@ -55,16 +55,19 @@ export function AboutMe() {
 
         {/* ── Column 1: Text ── */}
         <motion.div style={{ y: yText }} className="flex flex-col justify-center relative z-20">
-          <motion.h2
-            initial={theme === 'sakura' ? { clipPath: "inset(100% 0 0 0)", filter: "url(#ink-reveal)" } : { clipPath: "inset(100% 0 0 0)" }}
-            whileInView={theme === 'sakura' ? { clipPath: "inset(0% 0 0 0)", filter: "drop-shadow(0px 0px 0px rgba(0,0,0,0))" } : { clipPath: "inset(0% 0 0 0)" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className={`text-6xl md:text-8xl font-light mb-8 tracking-tighter leading-tight
-              ${theme === "sakura" ? "font-serif text-[#1A1A1A]" : "font-mono text-[var(--accent-primary)] text-glow-cyan"}`}
-          >
-            Sobre Mí
-          </motion.h2>
+          {/* overflow-hidden is required for clipPath reveal to work */}
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ clipPath: "inset(100% 0 0 0)" }}
+              whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-60px" }}
+              className={`text-5xl sm:text-6xl md:text-8xl font-light mb-8 tracking-tighter leading-tight
+                ${theme === "sakura" ? "font-serif text-[#1A1A1A]" : "font-mono text-[var(--accent-primary)] text-glow-cyan"}`}
+            >
+              Sobre Mí
+            </motion.h2>
+          </div>
 
           <div className={`space-y-6 text-xl md:text-2xl font-light leading-relaxed max-w-[45ch]
             ${theme === "sakura" ? "font-sans text-gray-700" : "font-mono text-[var(--text-primary)] opacity-90"}`}

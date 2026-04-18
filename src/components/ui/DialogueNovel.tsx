@@ -299,7 +299,7 @@ export function DialogueNovel() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.95 }}
           transition={{ type: "spring", damping: 20 }}
-          className="fixed bottom-4 left-4 right-4 md:left-[10%] md:right-[10%] z-[100] flex items-end drop-shadow-2xl"
+          className="fixed bottom-0 left-0 right-0 md:bottom-4 md:left-[10%] md:right-[10%] z-[100] flex items-end drop-shadow-2xl px-2 pb-2 md:px-0 md:pb-0"
         >
           {/* Avatar */}
           <motion.div
@@ -316,10 +316,11 @@ export function DialogueNovel() {
           </motion.div>
 
           {/* Dialogue box */}
-          <div className={`flex-1 backdrop-blur-md border-[3px] p-4 md:p-6 mb-4 relative flex flex-col h-64 md:h-80
+          <div className={`flex-1 backdrop-blur-md border-[3px] p-3 md:p-6 mb-0 relative flex flex-col
+            h-[45svh] max-h-[340px] md:h-80 md:max-h-none
             ${theme === 'sakura'
-              ? 'bg-[#FFF5F5]/90 border-[#D13030] shadow-[4px_4px_0_rgba(209,48,48,0.3)] text-[#1A1A1A] rounded-lg'
-              : 'bg-[#050505]/90 border-[var(--accent-primary)] shadow-[0_0_20px_rgba(0,255,255,0.3)] text-[var(--accent-primary)]'
+              ? 'bg-[#FFF5F5]/95 border-[#D13030] shadow-[4px_4px_0_rgba(209,48,48,0.3)] text-[#1A1A1A] rounded-lg'
+              : 'bg-[#050505]/95 border-[var(--accent-primary)] shadow-[0_0_20px_rgba(0,255,255,0.3)] text-[var(--accent-primary)]'
             }`}
           >
             {/* Speaker tag */}
@@ -385,16 +386,17 @@ export function DialogueNovel() {
                 </span>
                 <input
                   type="text"
+                  inputMode="text"
+                  enterKeyHint="send"
                   className={`w-full bg-transparent border-none outline-none text-sm md:text-base font-mono
                     ${theme === 'sakura'
                       ? 'text-[#1A1A1A] placeholder:text-gray-400'
                       : 'text-[var(--text-primary)] placeholder:text-gray-600'}`}
-                  placeholder={isLoading || isTyping ? "Espera..." : "Escribe tu mensaje y presiona Enter..."}
+                  placeholder={isLoading || isTyping ? "Espera..." : "Escribe y presiona Enter..."}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleInputSubmit}
                   disabled={isLoading || isTyping}
-                  autoFocus
                 />
               </div>
             </div>

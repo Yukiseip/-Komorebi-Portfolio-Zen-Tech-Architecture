@@ -107,16 +107,19 @@ export function FooterSection() {
         <div className={`flex flex-col text-center md:text-left
           ${theme === "sakura" ? "font-serif text-black" : "font-mono text-white"}
         `}>
-          <motion.h2
-            initial={theme === 'sakura' ? { clipPath: "inset(100% 0 0 0)", filter: "url(#ink-reveal-footer)" } : { clipPath: "inset(100% 0 0 0)" }}
-            whileInView={theme === 'sakura' ? { clipPath: "inset(0% 0 0 0)", filter: "drop-shadow(0px 0px 0px rgba(0,0,0,0))" } : { clipPath: "inset(0% 0 0 0)" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 leading-none"
-          >
-            Inicio de<br />
-            <span className={theme === 'sakura' ? 'text-[#D13030]' : 'text-[var(--accent-primary)] text-glow-cyan'}>Enlace</span>
-          </motion.h2>
+          {/* overflow-hidden required for clipPath reveal to work on mobile */}
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ clipPath: "inset(100% 0 0 0)" }}
+              whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-60px" }}
+              className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 leading-none"
+            >
+              Inicio de<br />
+              <span className={theme === 'sakura' ? 'text-[#D13030]' : 'text-[var(--accent-primary)] text-glow-cyan'}>Enlace</span>
+            </motion.h2>
+          </div>
           <p className={`text-base md:text-lg mb-10 max-w-md mx-auto md:mx-0 opacity-80
             ${theme === 'sakura' ? 'font-sans text-gray-700' : 'font-mono text-gray-300'}
           `}>
