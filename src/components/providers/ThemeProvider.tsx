@@ -14,16 +14,19 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Read localStorage synchronously so there's no flash on first load.
-  // The function is only called once during initialization (lazy initializer).
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'sakura'; // SSR default
-    return (localStorage.getItem('theme') as Theme) ?? 'sakura';
-  });
+  // IMPORTANT: Always initialize to 'sakura' so server and client render identically.
+  // The stored theme is applied in useEffect (client-only) to fix hydration mismatch.
+  const [theme, setTheme] = useState<Theme>("sakura");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Restore stored theme preference after hydration (client-only)
+    const stored = localStorage.getItem("theme") as Theme | null;
+    if (stored && stored !== theme) {
+      setTheme(stored);
+    }
     setMounted(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -33,34 +36,25 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [theme, mounted]);
 
+  // "use client" guarantees this runs only in the browser — no window guard needed.
   const playAmbientSound = (nextMode: Theme) => {
     try {
-      if (typeof window !== "undefined" && window.AudioContext) {
-        if (Howler.ctx && Howler.ctx.state === "suspended") {
-          Howler.ctx.resume();
-        }
-        if (!Howler.ctx) return;
-        
-        const oscillator = Howler.ctx.createOscillator();
-        const gainNode = Howler.ctx.createGain();
-        oscillator.type = "sine";
-        
-        const startFreq = nextMode === 'neon' ? 200 : 600;
-        const endFreq = nextMode === 'neon' ? 50 : 1200;
-        
-        oscillator.frequency.setValueAtTime(startFreq, Howler.ctx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(endFreq, Howler.ctx.currentTime + 0.5);
-        
-        gainNode.gain.setValueAtTime(0.2, Howler.ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, Howler.ctx.currentTime + 0.5);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(Howler.ctx.destination);
-        
-        oscillator.start();
-        oscillator.stop(Howler.ctx.currentTime + 0.5);
-      }
-    } catch(e) {
+      if (!Howler.ctx) return;
+      if (Howler.ctx.state === "suspended") Howler.ctx.resume();
+      const oscillator = Howler.ctx.createOscillator();
+      const gainNode   = Howler.ctx.createGain();
+      oscillator.type  = "sine";
+      const startFreq  = nextMode === "neon" ? 200 : 600;
+      const endFreq    = nextMode === "neon" ? 50  : 1200;
+      oscillator.frequency.setValueAtTime(startFreq, Howler.ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(endFreq, Howler.ctx.currentTime + 0.5);
+      gainNode.gain.setValueAtTime(0.2, Howler.ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, Howler.ctx.currentTime + 0.5);
+      oscillator.connect(gainNode);
+      gainNode.connect(Howler.ctx.destination);
+      oscillator.start();
+      oscillator.stop(Howler.ctx.currentTime + 0.5);
+    } catch (e) {
       console.warn("Audio error", e);
     }
   };
@@ -82,9 +76,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setThemeDirectly }}>
-      <div style={{ display: mounted ? "contents" : "contents" }}>
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 }

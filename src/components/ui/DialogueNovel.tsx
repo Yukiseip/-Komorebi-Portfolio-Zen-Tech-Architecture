@@ -93,6 +93,11 @@ export function DialogueNovel() {
     return audioCtxRef.current;
   }, []);
 
+  // Release OS audio session on unmount
+  useEffect(() => {
+    return () => { audioCtxRef.current?.close().catch(() => {}); };
+  }, []);
+
   // ── Reset on open / close ────────────────────────────────
   useEffect(() => {
     if (isOpen) {
@@ -315,20 +320,23 @@ export function DialogueNovel() {
             <Image src={avatarImg} alt="Yukisei IA" fill className="object-cover" sizes="128px" />
           </motion.div>
 
+          {/* Dialogue box wrapper — relative so the speaker tag can overflow upward */}
+          <div className="flex-1 min-w-0 relative pt-3">
+            {/* Speaker tag — sits above the border */}
+            <div className={`absolute top-0 left-4 px-2 py-1 text-xs font-bold uppercase tracking-wider z-10
+              ${theme === 'sakura' ? 'bg-[#D13030] text-white' : 'bg-[var(--accent-primary)] text-black'}`}
+            >
+              Yukisei
+            </div>
+
           {/* Dialogue box — fixed height, never grows */}
-          <div className={`flex-1 min-w-0 backdrop-blur-md border-[3px] p-3 md:p-6 relative flex flex-col
+          <div className={`backdrop-blur-md border-[3px] p-3 md:p-6 relative flex flex-col
             h-[48svh] max-h-[360px] md:h-[320px] md:max-h-none overflow-hidden
             ${theme === 'sakura'
               ? 'bg-[#FFF5F5]/95 border-[#D13030] shadow-[4px_4px_0_rgba(209,48,48,0.3)] text-[#1A1A1A] rounded-lg'
               : 'bg-[#050505]/95 border-[var(--accent-primary)] shadow-[0_0_20px_rgba(0,255,255,0.3)] text-[var(--accent-primary)]'
             }`}
           >
-            {/* Speaker tag */}
-            <div className={`absolute -top-3 left-4 px-2 py-1 text-xs font-bold uppercase tracking-wider
-              ${theme === 'sakura' ? 'bg-[#D13030] text-white' : 'bg-[var(--accent-primary)] text-black'}`}
-            >
-              Yukisei
-            </div>
 
             {/* Chat history — scrollable, min-h-0 needed for overflow to work inside flex */}
             <div
@@ -409,6 +417,7 @@ export function DialogueNovel() {
               ×
             </button>
           </div>
+          </div> {/* end wrapper */}
         </motion.div>
       )}
     </AnimatePresence>

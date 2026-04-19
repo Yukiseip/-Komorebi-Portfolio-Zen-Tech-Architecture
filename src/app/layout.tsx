@@ -4,10 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { AiProvider } from "@/components/providers/AiProvider";
-
 import { AmbientBackground } from "@/components/ui/AmbientBackground";
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { Sidebar } from "@/components/ui/Sidebar";
+import { AppShell } from "@/components/ui/AppShell";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,12 +48,14 @@ export default function RootLayout({
         <LenisProvider>
           <ThemeProvider>
             <AiProvider>
-              <Sidebar />
-              <div className="flex-1 w-full md:pl-[240px] flex flex-col relative">
-                <ThemeToggle />
-                <AmbientBackground />
-                {children}
-              </div>
+              <AppShell>
+                <Sidebar />
+                <div className="flex-1 w-full md:pl-[240px] flex flex-col relative">
+                  <ThemeToggle />
+                  <AmbientBackground />
+                  {children}
+                </div>
+              </AppShell>
             </AiProvider>
           </ThemeProvider>
         </LenisProvider>
