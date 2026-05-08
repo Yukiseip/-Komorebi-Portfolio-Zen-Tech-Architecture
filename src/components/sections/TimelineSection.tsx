@@ -6,6 +6,12 @@ import { useRef } from "react";
 
 const TIMELINE_DATA = [
   {
+    "year": "2026",
+    "title": "Auxiliar Administrativo (Análisis de Datos y Automatización)",
+    "entity": "Fiscalía General del Estado de Chiapas",
+    "description": "Automatización con Python e IA local. Desarrollo de dashboards en Streamlit y sistemas de consulta basados en RAG."
+  },
+  {
     year: "2025 - 2026",
     title: "Prácticas Profesionales",
     entity: "ILCE (Instituto Latinoamericano de la Comunicación Educativa)",
@@ -18,7 +24,7 @@ const TIMELINE_DATA = [
     description: "Graduado con honores (Promedio 95). Enfoque en arquitectura de software, inteligencia artificial y ciberseguridad."
   },
   {
-    year: "2019 - 2022",
+    year: "2021 - 2022",
     title: "Desarrollador freelance",
     entity: "Trabajo independiente",
     description: "Enfocado en el desarrollo de soluciones web y software."
@@ -37,7 +43,7 @@ export function TimelineSection() {
 
   return (
     <section id="experience" ref={containerRef} className="relative min-h-screen py-32 px-6 w-full flex flex-col justify-center items-center z-10 bg-transparent">
-      
+
       {/* SVG filter strictly for the fluid reveal */}
       <svg className="fixed h-0 w-0 pointer-events-none">
         <defs>
@@ -47,9 +53,9 @@ export function TimelineSection() {
           </filter>
         </defs>
       </svg>
-      
+
       <div className="w-full text-center mb-24 z-20">
-        <motion.h2 
+        <motion.h2
           initial={theme === 'sakura' ? { clipPath: "inset(100% 0 0 0)", filter: "url(#ink-reveal-timeline)" } : { clipPath: "inset(100% 0 0 0)" }}
           whileInView={theme === 'sakura' ? { clipPath: "inset(0% 0 0 0)", filter: "drop-shadow(0px 0px 0px rgba(0,0,0,0))" } : { clipPath: "inset(0% 0 0 0)" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -91,23 +97,23 @@ export function TimelineSection() {
       </div>
 
       <div className="relative w-full max-w-[800px] mx-auto flex flex-col gap-24 z-20">
-        
+
         {/* Animated Vertical Line (SVG) */}
         <div className="absolute top-0 bottom-0 left-[27px] md:left-1/2 md:-translate-x-1/2 w-[2px]">
-           {/* Background line track */}
-           <div className={`absolute inset-0 w-full h-full ${theme === 'sakura' ? 'bg-black/10' : 'bg-white/10'}`} />
-           {/* Progress line */}
-           <motion.div 
-             className={`absolute top-0 w-full origin-top ${theme === 'sakura' ? 'bg-[#D13030]' : 'bg-[var(--accent-primary)] shadow-[0_0_10px_var(--accent-primary)]'}`}
-             style={{ scaleY: smoothProgress, willChange: "transform" }}
-           />
+          {/* Background line track */}
+          <div className={`absolute inset-0 w-full h-full ${theme === 'sakura' ? 'bg-black/10' : 'bg-white/10'}`} />
+          {/* Progress line */}
+          <motion.div
+            className={`absolute top-0 w-full origin-top ${theme === 'sakura' ? 'bg-[#D13030]' : 'bg-[var(--accent-primary)] shadow-[0_0_10px_var(--accent-primary)]'}`}
+            style={{ scaleY: smoothProgress, willChange: "transform" }}
+          />
         </div>
 
         {TIMELINE_DATA.map((item, index) => {
           const isEven = index % 2 === 0;
 
           return (
-            <motion.div 
+            <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -118,14 +124,14 @@ export function TimelineSection() {
               `}
             >
               {/* Dot mapping to the line */}
-              <div 
+              <div
                 className={`absolute left-0 md:left-1/2 -ml-[6px] md:-ml-[8px] w-4 h-4 md:w-5 md:h-5 rounded-full z-10 transition-colors duration-500
                   ${theme === 'sakura' ? 'bg-[#D13030] shadow-[0_0_10px_rgba(209,48,48,0.5)]' : 'bg-[#00FFFF] shadow-[0_0_15px_#00FFFF]'}
                 `}
               />
 
               {/* Card Content */}
-              <div 
+              <div
                 className={`pl-12 md:pl-0 w-full md:w-[40%] flex flex-col
                   ${isEven ? 'md:pr-16 md:text-right md:items-end' : 'md:pl-16 md:text-left md:items-start'}
                 `}
@@ -135,22 +141,22 @@ export function TimelineSection() {
                 `}>
                   [{item.year}]
                 </span>
-                
+
                 <h3 className={`text-xl md:text-2xl font-bold uppercase mb-2
                   ${theme === 'sakura' ? 'font-serif text-black' : 'font-mono text-white'}
                 `}>
                   {item.title}
                 </h3>
-                
+
                 <span className={`text-xs uppercase tracking-widest mb-4 opacity-70
                   ${theme === 'sakura' ? 'font-sans text-gray-600' : 'font-mono text-[var(--text-secondary)]'}
                 `}>
                   {item.entity}
                 </span>
-                
+
                 <p className={`text-sm md:text-base leading-relaxed p-4 md:p-6 backdrop-blur-md rounded border transition-colors shadow-xl
-                  ${theme === 'sakura' 
-                    ? 'bg-white/60 border-white text-gray-800' 
+                  ${theme === 'sakura'
+                    ? 'bg-white/60 border-white text-gray-800'
                     : 'bg-black/60 border-white/10 text-gray-300'}
                 `}>
                   {item.description}

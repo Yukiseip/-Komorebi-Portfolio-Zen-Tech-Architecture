@@ -9,8 +9,10 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { GatewayAnimation } from "@/components/ui/GatewayAnimation";
-import { PetalBurst } from "@/components/ui/PetalEffects";
+import dynamic from "next/dynamic";
+
+const GatewayAnimation = dynamic(() => import("@/components/ui/GatewayAnimation").then(mod => mod.GatewayAnimation), { ssr: false });
+const PetalBurst = dynamic(() => import("@/components/ui/PetalEffects").then(mod => mod.PetalBurst), { ssr: false });
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Constants

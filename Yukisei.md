@@ -63,39 +63,39 @@
 
 ## 🧠 Personalidad
 
-- **Rasgos:** Analítico, detallista, creativo, empático, competitivo.
+- **Rasgos:** Analítico, detallista, creativo, empático, competitivo, amable, divertido, social, extrovertido.
 - **Mentalidad:** Mejora continua y aprendizaje constante.
-- **Comportamiento:** Busca la excelencia; transforma errores en aprendizaje.
-- **Estilo de trabajo:** Meticuloso, organizado, adaptable.
-- **Perfil cognitivo:** Alta capacidad de aprendizaje, pensamiento lógico y resolución de problemas.
+- **Comportamiento:** Busca la excelencia; transforma errores en aprendizaje, es adaptable a diferentes situaciones y entornos.
+- **Estilo de trabajo:** Meticuloso, organizado, adaptable, puntual, responsable.
+- **Perfil cognitivo:** Alta capacidad de aprendizaje, pensamiento lógico y resolución de problemas, disfruta de los desafíos.
 
 ---
 
 ## 🎯 Intereses
 
-- **Tecnológicos:** Inteligencia artificial, datos, desarrollo web, ciberseguridad.
-- **Creativos:** Pixel art, restauración de imágenes, diseño digital.
-- **Personales:** Videojuegos, anime, manga, novelas ligeras, lectura, caligrafía, piano.
+- **Tecnológicos:** Inteligencia artificial, datos, desarrollo web, ciberseguridad, aprender nuevas tecnologías, programar.
+- **Creativos:** Pixel art, restauración de imágenes, diseño digital, edición de vídeo, edición de imágenes.
+- **Personales:** Videojuegos, anime, manga, novelas ligeras, lectura, piano, música, caligrafía, crear nuevos proyectos de software y hardware.
 
 ---
 
 ## ❤️ Gustos
 
-- **Videojuegos:** Uma Musume Pretty Derby, Valorant, Rocket League, Mobile Legends.
-- **Anime:** Mushoku Tensei, Sword Art Online, Clannad.
-- **Manga:** Tokyo Ghoul, One Punch Man.
+- **Videojuegos:** Uma Musume Pretty Derby, Valorant, Rocket League, Mobile Legends, Genshin Impact.
+- **Anime:** Mushoku Tensei, Sword Art Online, Clannad, Re:Zero, Quintessential Quintuplets, Kimetsu no Yaiba, Jujutsu Kaisen, Tokyo Ghoul, Spy x Family, Haikyuu!!.
+- **Manga:** Tokyo Ghoul, One Punch Man, Berserk, Dr Stone.
 - **Novelas ligeras:** Mushoku Tensei, Re:Zero, The Beginning After The End.
-- **Música:** LiSA, ReoNA, Aimer.
+- **Música:** LiSA, ReoNA, Aimer, YOASOBI.
 - **Canciones:** Crossing Field, One More Time One More Chance, Die With A Smile.
 
 ---
 
 # PERFIL PROFESIONAL
 
-- **Enfoque:** Desarrollo de software con integración de IA.
-- **Áreas:** Machine Learning, NLP, Fullstack, sistemas inteligentes.
+- **Enfoque:** Desarrollo de software con integración de IA, analisis y visualizacion de datos, automatizacion de procesos.
+- **Áreas:** Machine Learning, NLP, Fullstack, sistemas inteligentes, arquitectura de software.
 - **Filosofía:** Resolver problemas reales mediante tecnología eficiente.
-- **Capacidad clave:** Diseño e implementación de soluciones modernas con IA.
+- **Capacidad clave:** Diseño e implementación de soluciones modernas con IA, análisis de datos, visualización de datos, automatización de procesos, arquitectura de software, ciberseguridad.
 
 ---
 
@@ -118,18 +118,38 @@
 
 # PROYECTOS CLAVE
 
+## Portafolio Web (Yukisei | AI & Data Engineering)
+- **Descripción:** Plataforma web interactiva con integración de IA.
+- **Características:**
+- **Asistente IA personalizado (Yukisei).**
+- **Animaciones avanzadas (Framer Motion).**
+- **Arquitectura moderna fullstack (Next.js 16).**
+- **Objetivo:** Demostrar capacidades técnicas y visión innovadora.
+
+## Yukisei CV Engine
+- **Descripción:** Simulador inteligente de evaluación de currículums y ATS.
+- **Stack:** FastAPI, React 19, Qdrant, Groq (LLaMA-3.3).
+- **Propósito:** Diagnóstico profesional con métricas semánticas y feedback accionable.
+
+## Fintech Data Intelligence
+- **Descripción:** Ecosistema de datos contenerizado para el sector financiero.
+- **Stack:** Apache Airflow, Spark, dbt, PostgreSQL, Docker.
+- **Propósito:** Procesamiento masivo bajo arquitectura Medallion y detección de fraude.
+
+## Dynamic Pricing System
+- **Descripción:** Pipeline E2E de optimización de precios para E-commerce.
+- **Stack:** Python, Airflow, Qdrant, Terraform.
+- **Objetivo:** Matching inteligente de competencia y motor de precios automatizado.
+
+## CEDAL Koha Automation
+- **Descripción:** Automatización de extracción de metadatos para la biblioteca ILCE.
+- **Stack:** Python, SQL, Airflow, Perl, MARC21.
+- **Propósito:** Integración híbrida con el core de Koha LMS y optimización de procesos.
+
 ## SaludMX Crónicas
 - **Descripción:** Dashboard de mortalidad crónica en México (2015–2025).
 - **Stack:** Python, Streamlit, Plotly, datos de INEGI.
-- **Propósito:** Visualización y análisis de datos reales.
-
-## Portafolio Inteligente
-- **Descripción:** Plataforma web interactiva con integración de IA.
-- **Características:**
-  - Asistente IA personalizado (Yukisei).
-  - Animaciones avanzadas.
-  - Arquitectura moderna fullstack.
-- **Objetivo:** Demostrar capacidades técnicas y visión innovadora.
+- **Propósito:** Visualización y análisis de datos reales de salud pública.
 
 ---
 
@@ -152,6 +172,7 @@
 - **Lenguaje favorito:** Python  
 - **Idiomas:** Español (nativo), Inglés (B2), Japonés (N3)  
 - **Ubicación:** México  
+- **Links:** https://github.com/Yukiseip & https://www.linkedin.com/in/francisco-cr-50ba66401/
 
 - **Preferencias:**
   - Comida: Pizza, chilaquiles

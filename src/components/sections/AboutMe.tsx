@@ -12,7 +12,9 @@ import {
 } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { SettledPetals } from "@/components/ui/PetalEffects";
+import dynamic from "next/dynamic";
+
+const SettledPetals = dynamic(() => import("@/components/ui/PetalEffects").then(mod => mod.SettledPetals), { ssr: false });
 
 /* ─────────────────────────────────────────────────────────────────────────────
    UTILITY: Animated counting number
@@ -171,7 +173,7 @@ function ProfileCard({
       {/* ── Photo (static, no levitation) ── */}
       <div className="w-full h-full relative z-10 overflow-hidden rounded-sm">
         <Image
-          src="/imagenes/imagen-personal.jpeg"
+          src="/images/profile/imagen-personal.jpeg"
           alt="Francisco Calvo Rodriguez"
           fill
           className="object-cover"
@@ -221,10 +223,8 @@ function StatCard({
       className="flex flex-col items-center cursor-default select-none"
     >
       <div
-        className="relative flex flex-col items-center justify-center rounded-full"
+        className="relative flex flex-col items-center justify-center rounded-full w-[100px] h-[100px] sm:w-[110px] sm:h-[110px] md:w-[136px] md:h-[136px]"
         style={{
-          width: "136px",
-          height: "136px",
           background: isNight ? "rgba(0,255,255,0.05)" : "rgba(255,255,255,0.65)",
           backdropFilter: "blur(10px)",
           border: isNight ? "1px solid rgba(0,255,255,0.2)" : "1px solid rgba(255,183,197,0.45)",
@@ -264,6 +264,18 @@ function YukiseiButton({
   onHoverStart: () => void;
   onHoverEnd: () => void;
 }) {
+  const [textIndex, setTextIndex] = useState(0);
+  const phrases = isNight
+    ? ["[ Conéctate con la IA ]", "[ Iniciar escaneo ]", "[ Consultar datos ]"]
+    : ["Si necesitas saber algo, haz clic en mí.", "¿Cómo funciona?", "Hazme una pregunta rápida."];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTextIndex((prev) => (prev + 1) % phrases.length);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [phrases.length]);
+
   return (
     <motion.button
       onClick={() => onClick()}
@@ -274,12 +286,12 @@ function YukiseiButton({
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
       className="relative w-full overflow-hidden rounded-full cursor-pointer"
       style={{
-        background: isNight ? "rgba(0,255,255,0.06)" : "rgba(255,255,255,0.55)",
+        background: isNight ? "rgba(0,255,255,0.08)" : "rgba(255,255,255,0.9)",
         backdropFilter: "blur(12px)",
-        border: isNight ? "1px solid rgba(0,255,255,0.3)" : "1px solid rgba(255,255,255,0.8)",
+        border: isNight ? "1px solid rgba(0,255,255,0.4)" : "1px solid rgba(209,48,48,0.3)",
         boxShadow: isNight
-          ? "inset 0 1px 0 rgba(0,255,255,0.15)"
-          : "inset 0 1px 0 rgba(255,255,255,0.9)",
+          ? "0 4px 20px rgba(0,255,255,0.15), inset 0 1px 0 rgba(0,255,255,0.2)"
+          : "0 8px 32px rgba(209,48,48,0.15), inset 0 1px 0 rgba(255,255,255,1)",
       }}
       aria-label={isNight ? "Conectar con Yukisei IA" : "Averigua más sobre Francisco con Yukisei"}
     >
@@ -291,12 +303,19 @@ function YukiseiButton({
         >
           {isNight ? "⬡ YUKISEI IA" : "✦ Yukisei IA"}
         </span>
-        <span
-          className={`text-[10px] tracking-[0.18em] opacity-65 ${isNight ? "font-mono text-[var(--text-secondary)]" : "font-serif text-gray-600"
-            }`}
-        >
-          {isNight ? "[ Conéctate con la IA ]" : "Si necesitas saber algo, haz clic en mí."}
-        </span>
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={textIndex}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.3 }}
+            className={`text-[10px] tracking-[0.18em] opacity-80 ${isNight ? "font-mono text-[var(--text-secondary)]" : "font-serif text-gray-800"
+              }`}
+          >
+            {phrases[textIndex]}
+          </motion.span>
+        </AnimatePresence>
       </span>
     </motion.button>
   );
@@ -458,7 +477,7 @@ export function AboutMe() {
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: false, amount: 0.3 }}
           >
-            {["Full-Stack", "IA / ML", "UX Design", "Cloud"].map((tag) => (
+            {["Full-Stack", "IA / ML", "Big Data", "UX / UI"].map((tag) => (
               <span
                 key={tag}
                 className={`text-[10px] uppercase tracking-widest px-3 py-1 rounded-full
@@ -517,7 +536,7 @@ export function AboutMe() {
                   className="absolute -top-12 -right-12 w-24 h-24 pointer-events-none drop-shadow-xl z-[60]"
                 >
                   <Image
-                    src="/imagenes/Boton_IA.png"
+                    src="/images/ui/Boton_IA.png"
                     alt="IA Sticker"
                     fill
                     className="object-contain"
@@ -530,7 +549,7 @@ export function AboutMe() {
         </motion.div>
 
         {/* ════ COLUMN 3 — STATS ════ */}
-        <div className="flex flex-row md:flex-col gap-6 md:gap-8 items-center md:items-start shrink-0 z-30">
+        <div className="flex flex-row flex-wrap md:flex-col justify-center gap-4 md:gap-8 items-center md:items-start shrink-0 z-30">
           {STATS.map((stat, i) => (
             <StatCard key={i} num={stat.num} title={stat.title} index={i} isNight={isNight} />
           ))}

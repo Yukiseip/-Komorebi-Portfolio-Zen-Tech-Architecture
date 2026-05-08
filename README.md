@@ -1,12 +1,15 @@
-# Francisco Calvo — Portafolio Inteligente
+# Francisco Calvo — Portafolio Inteligente "Komorebi"
 
-> Un portafolio de desarrollador construido como producto de software: arquitectura real, IA integrada, animaciones de grado de producción y experiencia dual Día/Noche.
+<div align="center">
+  <img src="./public/images/projects/Project_1.png" alt="Komorebi Portfolio Banner" width="100%" style="border-radius: 10px; margin-bottom: 20px;" />
+  <p><strong>Un portafolio de desarrollador construido como un producto de software: arquitectura real, IA integrada (Yukisei), animaciones de grado de producción y experiencia dual Día/Noche.</strong></p>
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
-[![Gemini 2.5](https://img.shields.io/badge/Gemini-2.5_Flash-orange?logo=google)](https://ai.google.dev)
-[![Groq](https://img.shields.io/badge/Groq-Fallback-red)](https://groq.com)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
+  [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
+  [![Gemini 2.5](https://img.shields.io/badge/Gemini-2.5_Flash-orange?logo=google)](https://ai.google.dev)
+  [![Groq](https://img.shields.io/badge/Groq-Fallback-red)](https://groq.com)
+  [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
+</div>
 
 ---
 
@@ -155,10 +158,10 @@ Configura estas variables en **Settings → Environment Variables**:
 
 Ingeniero en Sistemas egresado de UVEG (México), especializado en **IA aplicada y desarrollo Full Stack**. Construye productos en la intersección entre UX de calidad y backends eficientes.
 
-📍 Costa Rica · [LinkedIn](https://www.linkedin.com/in/francisco-cr-50ba66401/) · [GitHub](https://github.com/Yukiseip)
+📍 México · [LinkedIn](https://www.linkedin.com/in/francisco-cr-50ba66401/) · [GitHub](https://github.com/Yukiseip)
 
 ---
 
 <div align="center">
-  <sub>Construido con 🌸 en Costa Rica · © 2025 Francisco Calvo</sub>
+  <sub>Construido con 🌸 en México · © 2025 Francisco Calvo</sub>
 </div>

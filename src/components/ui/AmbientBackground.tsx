@@ -136,7 +136,6 @@ export function AmbientBackground() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
             className="fixed inset-0 z-[-1]"
-            style={{ y: yParallax }}
           >
             <NeonGrid />
           </motion.div>

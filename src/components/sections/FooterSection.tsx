@@ -110,10 +110,10 @@ export function FooterSection() {
           {/* overflow-hidden required for clipPath reveal to work on mobile */}
           <div className="overflow-hidden">
             <motion.h2
-              initial={{ clipPath: "inset(100% 0 0 0)" }}
-              whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: true, amount: 0.1 }}
               className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 leading-none"
             >
               Inicio de<br />
@@ -258,7 +258,7 @@ export function FooterSection() {
       </div>
 
       {/* ── Footer bottom bar ── */}
-      <div className={`relative mt-20 pt-8 pb-10 flex flex-col md:flex-row items-center justify-between gap-4
+      <div className={`relative mt-20 pt-8 pb-16 md:pb-24 flex flex-col md:flex-row items-center justify-between gap-4
         ${theme === 'sakura' ? 'border-t border-black/[0.06]' : 'border-t border-white/[0.06]'}`}>
 
         <span className={`text-[10px] uppercase tracking-[0.3em] opacity-30

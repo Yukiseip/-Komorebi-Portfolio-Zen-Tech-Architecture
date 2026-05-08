@@ -293,8 +293,8 @@ export function DialogueNovel() {
   };
 
   const avatarImg = theme === 'sakura'
-    ? '/imagenes/Yukisei2_day.jpg'
-    : '/imagenes/Yukisei2_night.jpg';
+    ? '/images/ui/Yukisei2_day.jpg'
+    : '/images/ui/Yukisei2_night.jpg';
 
   return (
     <AnimatePresence>
