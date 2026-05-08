@@ -19,29 +19,15 @@ import { useEffect } from "react";
 /* ─── Neon retro-grid background ─────────────────────────────────────────── */
 function NeonGrid() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none bg-[#050505] opacity-80">
-      {/* Perspective wrapper */}
-      <div className="absolute inset-0 perspective-[1000px] flex items-center justify-center">
-        {/* Animated Grid */}
-        <motion.div
-          className="absolute bottom-[-50%] w-[200%] h-[150%] border-t-[1px] border-[#00FFFF]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #00FFFF 1px, transparent 1px),
-              linear-gradient(to bottom, #00FFFF 1px, transparent 1px)
-            `,
-            backgroundSize: "50px 50px",
-            transformOrigin: "top",
-            rotateX: "70deg",
-            boxShadow: "inset 0 0 100px #FF00FF",
-            willChange: "transform",  // only transform composites on GPU
-          }}
-          animate={{ backgroundPosition: ["0px 0px", "0px 50px"] }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-      {/* Horizon Fade */}
-      <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-[#050505] via-[#050505] to-transparent z-10" />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none bg-[#050505]">
+      {/* Clean, subtle neon ambient glow without the animated road/grid */}
+      <div
+        className="absolute inset-0 opacity-40"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(0,255,255,0.05) 0%, transparent 80%)",
+        }}
+      />
     </div>
   );
 }
