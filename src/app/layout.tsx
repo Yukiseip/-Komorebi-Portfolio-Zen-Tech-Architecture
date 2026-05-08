@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Serif_JP, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -28,8 +28,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-import type { Metadata, Viewport } from "next";
-
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#FFB7C5" },
@@ -46,8 +44,16 @@ export const metadata: Metadata = {
     default: "Yukisei | AI & Data Engineering",
     template: "%s | Yukisei",
   },
-  description: "Portafolio profesional de Francisco Calvo, Ingeniero en Sistemas especializado en Inteligencia Artificial, Data Engineering y Arquitectura Cloud.",
-  keywords: ["AI Engineering", "Data Engineering", "Full Stack", "Francisco Calvo", "Yukisei", "Portfolio"],
+  description:
+    "Portafolio profesional de Francisco Calvo, Ingeniero en Sistemas especializado en Inteligencia Artificial, Data Engineering y Arquitectura Cloud.",
+  keywords: [
+    "AI Engineering",
+    "Data Engineering",
+    "Full Stack",
+    "Francisco Calvo",
+    "Yukisei",
+    "Portfolio",
+  ],
   authors: [{ name: "Francisco Calvo" }],
   creator: "Francisco Calvo",
   openGraph: {
@@ -55,7 +61,8 @@ export const metadata: Metadata = {
     locale: "es_MX",
     url: "https://yukisei.com",
     title: "Yukisei | AI & Data Engineering",
-    description: "Portafolio profesional especializado en Inteligencia Artificial y Data Engineering.",
+    description:
+      "Portafolio profesional especializado en Inteligencia Artificial y Data Engineering.",
     siteName: "Yukisei",
     images: [
       {
@@ -69,7 +76,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Yukisei | AI & Data Engineering",
-    description: "Portafolio profesional especializado en Inteligencia Artificial y Data Engineering.",
+    description:
+      "Portafolio profesional especializado en Inteligencia Artificial y Data Engineering.",
     images: ["/images/projects/Project_1.png"],
   },
   robots: {
