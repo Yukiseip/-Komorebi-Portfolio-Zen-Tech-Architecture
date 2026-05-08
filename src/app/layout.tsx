@@ -9,23 +9,28 @@ import { LenisProvider } from "@/components/providers/LenisProvider";
 import { Sidebar } from "@/components/ui/Sidebar";
 import { AppShell } from "@/components/ui/AppShell";
 
+// ── Fonts: latin-only subsets + display:swap removes them from critical path ──
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const notoSerifJp = Noto_Serif_JP({
+  // Only load weight 400 for initial render; 700 (bold) deferred via CSS font-display
   weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-noto-serif-jp",
   display: "swap",
+  preload: false, // non-critical decorative font — don't block initial render
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  preload: false, // used only in neon/code theme — non-critical for initial paint
 });
 
 export const viewport: Viewport = {
@@ -104,6 +109,11 @@ export default function RootLayout({
       className={`${inter.variable} ${notoSerifJp.variable} ${jetbrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Preconnect to Google Fonts origins to reduce font critical-chain latency */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-full flex flex-col relative w-full">
         <LenisProvider>
           <ThemeProvider>

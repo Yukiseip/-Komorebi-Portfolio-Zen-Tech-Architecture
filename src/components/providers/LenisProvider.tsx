@@ -12,13 +12,31 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       touchMultiplier: 2,
     });
 
+    let rafHandle: number;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafHandle = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+
+    // Only run the scroll loop when tab is visible
+    function start() {
+      rafHandle = requestAnimationFrame(raf);
+    }
+    function stop() {
+      cancelAnimationFrame(rafHandle);
+    }
+
+    const handleVisibility = () => {
+      document.hidden ? stop() : start();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    start();
 
     return () => {
+      stop();
+      document.removeEventListener("visibilitychange", handleVisibility);
       lenis.destroy();
     };
   }, []);

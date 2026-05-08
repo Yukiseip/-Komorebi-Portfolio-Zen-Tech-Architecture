@@ -241,6 +241,9 @@ function ProjectStage({ project, index }: { project: (typeof PROJECTS)[0]; index
   const yImg = useTransform(scrollYProgress, [0, 1], [-50, 50]);
   const yText = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
+  // First project is the LCP element — load it eagerly with priority
+  const isFirst = index === 0;
+
   return (
     <div ref={stageRef} className="relative w-full flex flex-col items-center py-20 md:py-28 px-4 overflow-hidden">
       <div className="relative z-10 w-full max-w-[1200px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -254,7 +257,16 @@ function ProjectStage({ project, index }: { project: (typeof PROJECTS)[0]; index
                 : "0 25px 50px rgba(209,48,48,0.15), 0 0 0 1px rgba(209,48,48,0.1)",
             }}
           >
-            <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-700 hover:scale-105" quality={90} />
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-700 hover:scale-105"
+              quality={isFirst ? 85 : 75}
+              priority={isFirst}
+              loading={isFirst ? "eager" : "lazy"}
+              sizes="(max-width: 1024px) 100vw, (max-width: 1200px) 50vw, 560px"
+            />
             <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent pointer-events-none" />
           </div>
         </motion.div>

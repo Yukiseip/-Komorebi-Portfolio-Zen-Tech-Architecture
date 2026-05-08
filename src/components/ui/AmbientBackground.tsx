@@ -3,14 +3,11 @@
 import { useTheme } from "@/components/providers/ThemeProvider";
 import {
   motion,
-  useScroll,
-  useTransform,
   useMotionTemplate,
   useMotionValue,
   AnimatePresence,
-  useSpring,
 } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 // NOTE: Global SakuraCanvas petal rain removed intentionally.
 // Petal effects are now localized to the HeroSection via PetalBurst (PetalEffects.tsx)
@@ -53,29 +50,29 @@ export function AmbientBackground() {
   const { theme } = useTheme();
   const isNeon = theme !== "sakura";
 
-  // Parallax spring — only needed for the Neon retro-grid.
-  // Computed unconditionally (hooks can't be conditional) but only
-  // consumed inside the neon branch, so the spring is cheaply idle in sakura.
-  const { scrollY } = useScroll();
-  const smoothScrollY = useSpring(scrollY, { stiffness: 1000, damping: 100 });
-  const yParallax = useTransform(smoothScrollY, [0, 5000], [0, 500]);
-
-  // Mouse spotlight
+  // Mouse spotlight — throttled via rAF to avoid forced reflow on every mousemove
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      // Use rAF to throttle updates and prevent layout thrashing
+      if (rafId.current !== null) return;
+      rafId.current = requestAnimationFrame(() => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+        rafId.current = null;
+      });
     };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current);
+    };
   }, [mouseX, mouseY]);
 
   // Mouse spotlight — neon mode only.
-  // In sakura (day) mode the spotlight is disabled to avoid the white glow
-  // washing out light-colored content.
   const neonSpotlight = useMotionTemplate`radial-gradient(circle 600px at ${mouseX}px ${mouseY}px, rgba(0,255,255,0.13), transparent 80%)`;
 
   return (
