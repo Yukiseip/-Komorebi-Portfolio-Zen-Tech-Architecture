@@ -18,6 +18,10 @@ const TimelineSection = dynamic(
   () => import("@/components/sections/TimelineSection").then((m) => m.TimelineSection),
   { ssr: true }
 );
+const YukiseiSection = dynamic(
+  () => import("@/components/sections/YukiseiSection").then((m) => m.YukiseiSection),
+  { ssr: true }
+);
 const FooterSection = dynamic(
   () => import("@/components/sections/FooterSection").then((m) => m.FooterSection),
   { ssr: true }
@@ -35,6 +39,8 @@ export default function Home() {
       <ProjectsSection />
       <SectionDivider />
       <TimelineSection />
+      <SectionDivider />
+      <YukiseiSection />
       <FooterSection />
       <DialogueNovelLoader />
     </main>

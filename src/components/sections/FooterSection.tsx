@@ -1,10 +1,9 @@
 "use client";
 
 import { useTheme } from "@/components/providers/ThemeProvider";
-import { useAi } from "@/components/providers/AiProvider";
 import { motion } from "framer-motion";
 import { Mail, Terminal } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const GithubIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -41,31 +40,10 @@ const CvIcon = () => (
 
 export function FooterSection() {
   const { theme } = useTheme();
-  const { openAi, isOpen } = useAi();
-  const footerRef = useRef<HTMLElement>(null);
-  const [hasTriggeredAi, setHasTriggeredAi] = useState(false);
 
   // Form Simulation State
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasTriggeredAi && !isOpen) {
-          openAi("La simulación ha llegado a su fin. ¿Iniciamos una conexión real?");
-          setHasTriggeredAi(true);
-        }
-      },
-      { root: null, threshold: 0.5 }
-    );
-
-    if (footerRef.current) {
-      observer.observe(footerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasTriggeredAi, isOpen, openAi]);
 
   const handleSimulateSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +57,7 @@ export function FooterSection() {
   };
 
   return (
-    <footer id="contact" ref={footerRef} className="relative w-full pt-32 pb-0 px-6 mt-32 z-10">
+    <footer id="contact" className="relative w-full pt-32 pb-0 px-6 mt-32 z-10">
       {/* Gradient fade-in from page to footer — replaces hard border */}
       <div
         className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
@@ -89,18 +67,8 @@ export function FooterSection() {
       />
       {/* Top accent line */}
       <div className={`absolute top-0 left-0 right-0 h-[1px] ${theme === 'sakura' ? 'bg-gradient-to-r from-transparent via-[#D13030]/30 to-transparent'
-          : 'bg-gradient-to-r from-transparent via-[var(--accent-primary)]/40 to-transparent'
+        : 'bg-gradient-to-r from-transparent via-[var(--accent-primary)]/40 to-transparent'
         }`} />
-      {/* SVG filter strictly for the fluid reveal */}
-      <svg className="fixed h-0 w-0 pointer-events-none">
-        <defs>
-          <filter id="ink-reveal-footer" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
-
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center">
 
         {/* LEFT COLUMN: Narrative & Socials */}
@@ -166,7 +134,7 @@ export function FooterSection() {
             </motion.a>
             <motion.a
               whileHover={{ y: -5 }}
-              href="/cv.pdf" download="CV"
+              href="/FranciscoCR_CV.pdf" download="FranciscoCR_CV"
               title="Descargar CV"
               className={`p-4 rounded-full border transition-all duration-300
                 ${theme === "sakura"
