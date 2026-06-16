@@ -62,7 +62,7 @@ function PolaroidCollage({ isNight }: { isNight: boolean }) {
   return (
     <div
       className="relative select-none"
-      style={{ width: 310, height: 420 }}
+      style={{ width: "min(310px, 78vw)", height: "min(420px, 105vw)" }}
     >
       {CARDS.map((card) => {
         const isActive = card.id === activeId;

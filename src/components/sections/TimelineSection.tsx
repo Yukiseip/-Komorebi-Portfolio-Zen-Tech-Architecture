@@ -142,7 +142,7 @@ function TimelineEntry({
       </div>
 
       {/* ── Content area ── */}
-      <div className="flex flex-1 gap-6 pl-5 pb-16">
+      <div className="flex flex-1 flex-col gap-4 pl-5 pb-16">
         {/* Text block */}
         <div className="flex-1 min-w-0">
           <TagBadge tag={item.tag} isNight={isNight} />
@@ -170,24 +170,23 @@ function TimelineEntry({
           </p>
 
           <p
-            className="leading-relaxed"
+            className="leading-relaxed mb-4"
             style={{
               color: isNight ? "rgba(220,230,240,0.65)" : "rgba(30,30,30,0.65)",
               fontFamily: "var(--font-sans)",
               fontSize: "clamp(0.82rem, 1.1vw, 0.9rem)",
-              maxWidth: "48ch",
             }}
           >
             {item.description}
           </p>
         </div>
 
-        {/* Image panel */}
+        {/* Image panel — full width on mobile, constrained on desktop */}
         <div
-          className="flex-shrink-0 rounded-xl overflow-hidden relative"
+          className="w-full rounded-xl overflow-hidden relative"
           style={{
-            width: "clamp(200px, 28vw, 310px)",
-            height: "clamp(130px, 18vw, 200px)",
+            height: "clamp(160px, 40vw, 200px)",
+            maxWidth: "clamp(200px, 100%, 310px)",
             border: isNight
               ? "1px solid rgba(255,255,255,0.08)"
               : "1px solid rgba(0,0,0,0.08)",
@@ -198,7 +197,7 @@ function TimelineEntry({
             alt={item.title}
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 60vw, 310px"
+            sizes="(max-width: 768px) 90vw, 310px"
             loading="lazy"
           />
           {/* Subtle scrim so image integrates with dark background */}

@@ -259,7 +259,9 @@ function ProjectCard({
     <motion.div
       className="relative w-full rounded-2xl overflow-hidden cursor-pointer"
       style={{
-        aspectRatio: "16/9",
+        // On mobile use a taller fixed ratio so content is readable;
+        // on desktop keep 16/9
+        aspectRatio: "4/3",
         border: isNight
           ? "1px solid rgba(255,255,255,0.07)"
           : "1px solid rgba(0,0,0,0.08)",
@@ -280,16 +282,16 @@ function ProjectCard({
           transform: hovered ? "scale(1.05)" : "scale(1)",
           transition: "transform 0.55s cubic-bezier(0.22,1,0.36,1)",
         }}
-        sizes="(max-width: 768px) 100vw, 50vw"
+        sizes="(max-width: 640px) 100vw, 50vw"
         loading="lazy"
       />
 
-      {/* Base gradient — always present, bottom text always readable */}
+      {/* Always-present strong gradient so bottom text is always readable */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(4,8,16,0.96) 0%, rgba(4,8,16,0.55) 38%, rgba(4,8,16,0.06) 100%)",
+            "linear-gradient(to top, rgba(4,8,16,0.98) 0%, rgba(4,8,16,0.65) 42%, rgba(4,8,16,0.08) 100%)",
           transition: "opacity 0.35s ease",
         }}
       />
@@ -302,20 +304,19 @@ function ProjectCard({
         style={{ background: "rgba(2,5,12,0.42)" }}
       />
 
-      {/* Bottom info */}
-      <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 pt-10 z-10">
+      {/* Bottom info — always visible */}
+      <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-10 z-10">
         {/* Title + arrow icon */}
-        <div className="flex items-start justify-between gap-2 mb-1">
+        <div className="flex items-start justify-between gap-2 mb-1.5">
           <h3
             className="text-white font-bold leading-tight"
             style={{
-              fontSize: "clamp(0.88rem, 1.3vw, 1.05rem)",
+              fontSize: "clamp(0.82rem, 2.5vw, 1.05rem)",
               fontFamily: "var(--font-sans)",
             }}
           >
             {project.title}
           </h3>
-          {/* Small arrow in top-right of bottom panel — matches reference */}
           <svg
             width="13"
             height="13"
@@ -332,10 +333,10 @@ function ProjectCard({
         </div>
 
         <p
-          className="leading-snug mb-3"
+          className="leading-snug mb-2.5"
           style={{
-            color: "rgba(200,215,235,0.68)",
-            fontSize: "clamp(0.68rem, 0.88vw, 0.78rem)",
+            color: "rgba(200,215,235,0.72)",
+            fontSize: "clamp(0.65rem, 1.8vw, 0.78rem)",
             fontFamily: "var(--font-sans)",
           }}
         >
@@ -361,7 +362,7 @@ function ProjectCard({
         </div>
       </div>
 
-      {/* Hover action buttons — centered over image */}
+      {/* Hover action buttons — centered over image (desktop only) */}
       <AnimatePresence>
         {hovered && (
           <motion.div
@@ -370,8 +371,8 @@ function ProjectCard({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute inset-0 flex items-center justify-center gap-3 z-20 pointer-events-none"
-            style={{ paddingBottom: "4.5rem" }}
+            className="absolute inset-0 hidden sm:flex items-center justify-center gap-3 z-20 pointer-events-none"
+            style={{ paddingBottom: "5rem" }}
           >
             {/* Live button */}
             <motion.a
@@ -394,7 +395,6 @@ function ProjectCard({
               }}
               aria-label="Ver en live"
             >
-              {/* Play / external icon */}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1.5 10.5L10.5 1.5M10.5 1.5H5.5M10.5 1.5v5" />
               </svg>
@@ -422,7 +422,6 @@ function ProjectCard({
               }}
               aria-label="Ver código en GitHub"
             >
-              {/* GitHub icon */}
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
               </svg>
@@ -455,7 +454,7 @@ function ProjectGrid({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-        className="grid grid-cols-2 gap-4 w-full"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full"
       >
         {projects.map((project, i) => (
           <ProjectCard
