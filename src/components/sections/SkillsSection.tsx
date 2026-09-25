@@ -4,7 +4,6 @@ import { useTheme } from "@/components/providers/ThemeProvider";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-// ── Simple Icons (official logos) ─────────────────────────
 import {
   SiPython,
   SiReact,
@@ -17,12 +16,14 @@ import {
   SiMongodb,
   SiCplusplus,
   SiTailwindcss,
-  SiVercel,
   SiCss,
   SiHtml5,
+  SiPostgresql,
+  SiDocker,
 } from "react-icons/si";
 
-import { FaJava } from "react-icons/fa";
+import { FaJava, FaDatabase, FaAws } from "react-icons/fa";
+import { TbBrandCSharp } from "react-icons/tb";
 
 // ─────────────────────────────────────────────────────────
 // DATA
@@ -40,18 +41,22 @@ const TECHS: Tech[] = [
   { id: "typescript", label: "TypeScript", bg: "#3178C6", color: "#3178C6", Icon: SiTypescript },
   { id: "javascript", label: "JavaScript", bg: "#F7DF1E", color: "#F7DF1E", Icon: SiJavascript },
   { id: "cplusplus", label: "C++", bg: "#00599C", color: "#00599C", Icon: SiCplusplus },
-  { id: "nextjs", label: "Next.js", bg: "#FFFFFF", color: "#FFFFFF", Icon: SiNextdotjs },
-  { id: "tailwindcss", label: "Tailwind CSS", bg: "#06B6D4", color: "#06B6D4", Icon: SiTailwindcss },
-  { id: "mongodb", label: "MongoDB", bg: "#47A248", color: "#47A248", Icon: SiMongodb },
-  { id: "github", label: "GitHub", bg: "#FFFFFF", color: "#FFFFFF", Icon: SiGithub },
-  { id: "vercel", label: "Vercel", bg: "#FFFFFF", color: "#FFFFFF", Icon: SiVercel },
+  { id: "csharp", label: "C#", bg: "#239120", color: "#239120", Icon: TbBrandCSharp },
+  { id: "python", label: "Python", bg: "#3776AB", color: "#3776AB", Icon: SiPython },
   { id: "java", label: "Java", bg: "#007396", color: "#007396", Icon: FaJava },
+  { id: "nextjs", label: "Next.js", bg: "#FFFFFF", color: "#FFFFFF", Icon: SiNextdotjs },
+  { id: "react", label: "React", bg: "#61DAFB", color: "#61DAFB", Icon: SiReact },
   { id: "nodejs", label: "Node.js", bg: "#339933", color: "#339933", Icon: SiNodedotjs },
+  { id: "sql", label: "SQL", bg: "#E38C00", color: "#E38C00", Icon: FaDatabase },
+  { id: "postgresql", label: "PostgreSQL", bg: "#4169E1", color: "#4169E1", Icon: SiPostgresql },
+  { id: "mongodb", label: "MongoDB", bg: "#47A248", color: "#47A248", Icon: SiMongodb },
+  { id: "docker", label: "Docker", bg: "#2496ED", color: "#2496ED", Icon: SiDocker },
+  { id: "aws", label: "AWS", bg: "#FF9900", color: "#FF9900", Icon: FaAws },
+  { id: "git", label: "Git", bg: "#F05032", color: "#F05032", Icon: SiGit },
+  { id: "github", label: "GitHub", bg: "#FFFFFF", color: "#FFFFFF", Icon: SiGithub },
+  { id: "tailwindcss", label: "Tailwind CSS", bg: "#06B6D4", color: "#06B6D4", Icon: SiTailwindcss },
   { id: "css3", label: "CSS3", bg: "#1572B6", color: "#1572B6", Icon: SiCss },
   { id: "html5", label: "HTML5", bg: "#E34F26", color: "#E34F26", Icon: SiHtml5 },
-  { id: "react", label: "React", bg: "#61DAFB", color: "#61DAFB", Icon: SiReact },
-  { id: "python", label: "Python", bg: "#3776AB", color: "#3776AB", Icon: SiPython },
-  { id: "git", label: "Git", bg: "#F05032", color: "#F05032", Icon: SiGit },
 ];
 
 // ─────────────────────────────────────────────────────────
@@ -431,6 +436,7 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
+      suppressHydrationWarning
       className="relative min-h-[100vh] py-24 px-2 md:px-6 flex flex-col justify-center items-center w-full z-10 overflow-hidden"
       style={{
         backgroundImage: isNeon
@@ -447,8 +453,15 @@ export function SkillsSection() {
         viewport={{ once: true }}
         className="w-full text-center mb-10 z-20 pointer-events-none"
       >
-        <p className={`text-[11px] tracking-[0.35em] uppercase mb-3 ${isNeon ? "font-mono text-[var(--accent-primary)]" : "font-sans text-[#D13030]"}`}>
-          TECH STACK
+        <p className={`inline-flex items-center justify-center gap-1.5 text-[11px] tracking-[0.35em] uppercase mb-3 ${isNeon ? "font-mono text-[var(--accent-primary)]" : "font-sans text-[#D13030]"}`}>
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+            className="font-bold select-none"
+          >
+            &gt;
+          </motion.span>
+          <span>TECH STACK</span>
         </p>
 
         <h2 className={`text-4xl md:text-5xl font-bold ${isNeon ? "font-mono" : "font-serif"}`}>
@@ -509,7 +522,11 @@ export function SkillsSection() {
               onMouseLeave={handleHoverLeave}
             >
               {/* Direct Tech Icon Wrapper (no background box card) */}
-              <div className="flex flex-col items-center justify-center select-none cursor-pointer">
+              <div
+                className="flex flex-col items-center justify-center select-none cursor-pointer"
+                role="img"
+                aria-label={`Tecnología: ${tech.label}`}
+              >
                 {/* Glow behind the icon (visible on hover) */}
                 <div
                   className="absolute w-12 h-12 rounded-full blur-md pointer-events-none -z-10 transition-opacity duration-300"
@@ -518,6 +535,7 @@ export function SkillsSection() {
                     transform: "scale(1.5)",
                     opacity: isH ? 1 : 0,
                   }}
+                  aria-hidden="true"
                 />
 
                 {/* SVG Icon */}
@@ -529,6 +547,7 @@ export function SkillsSection() {
                       : "none",
                     transform: isH ? "scale(1.15)" : "scale(1)",
                   }}
+                  aria-hidden="true"
                 >
                   {mounted && <tech.Icon size={38} color={iconColor} />}
                 </div>
@@ -563,16 +582,6 @@ export function SkillsSection() {
         })}
       </div>
 
-      {/* ── Footer ──────────────────────────────────── */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        viewport={{ once: true }}
-        className={`mt-6 text-[11px] tracking-widest uppercase opacity-30 ${isNeon ? "font-mono text-white" : "font-sans text-black"}`}
-      >
-        {TECHS.length} tecnologías · 1 ecosistema
-      </motion.p>
     </section>
   );
 }

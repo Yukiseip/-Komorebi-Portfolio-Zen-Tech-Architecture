@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -14,28 +14,16 @@ const CARDS = [
     id: "me",
     src: "/images/profile/imagen-personal.jpeg",
     label: "I / Me",
-    rotate: 0,
-    offsetX: 0,
-    offsetY: 0,
-    zBase: 3,
   },
   {
     id: "journey",
     src: "/images/ui/travel.jpeg",
     label: "I Journey",
-    rotate: -8,
-    offsetX: -55,
-    offsetY: 15,
-    zBase: 2,
   },
   {
     id: "anime",
     src: "/images/ui/anime.jpg",
     label: "I Enjoy",
-    rotate: 10,
-    offsetX: 55,
-    offsetY: 18,
-    zBase: 1,
     objectPosition: "top",
   },
 ];
@@ -47,35 +35,49 @@ function PolaroidCollage({ isNight }: { isNight: boolean }) {
   const [activeId, setActiveId] = useState("me");
   const [hovered, setHovered] = useState<string | null>(null);
 
-  // Cycle active card every 8 s
-  useEffect(() => {
-    const ids = CARDS.map((c) => c.id);
-    const t = setInterval(() => {
-      setActiveId((prev) => {
-        const i = ids.indexOf(prev);
-        return ids[(i + 1) % ids.length];
-      });
-    }, 8000);
-    return () => clearInterval(t);
-  }, []);
+  const activeIdx = Math.max(
+    0,
+    CARDS.findIndex((c) => c.id === activeId)
+  );
 
   return (
     <div
       className="relative select-none"
       style={{ width: "min(310px, 78vw)", height: "min(420px, 105vw)" }}
     >
-      {CARDS.map((card) => {
+      {CARDS.map((card, i) => {
         const isActive = card.id === activeId;
         const isHov = hovered === card.id;
 
-        // Active card comes fully to the front, others keep base z
-        const zIndex = isActive ? 10 : card.zBase;
+        // Position slots relative to the active card (0 = center, 1 = left, 2 = right)
+        const diff = (i - activeIdx + CARDS.length) % CARDS.length;
 
-        // When a card is active: center it. Otherwise stack behind with offsets.
-        const tx = isActive ? 0 : card.offsetX;
-        const ty = isActive ? 0 : card.offsetY;
-        const rot = isActive ? 0 : card.rotate;
-        const sc = isHov && !isActive ? 1.04 : 1;
+        let tx = 0;
+        let ty = 0;
+        let rot = 0;
+        let zIndex = 1;
+
+        if (diff === 0) {
+          // Center / Main active photo
+          tx = 0;
+          ty = 0;
+          rot = 0;
+          zIndex = 10;
+        } else if (diff === 1) {
+          // Left wing
+          tx = -56;
+          ty = 16;
+          rot = -8;
+          zIndex = isHov ? 6 : 3;
+        } else {
+          // Right wing
+          tx = 56;
+          ty = 18;
+          rot = 10;
+          zIndex = isHov ? 6 : 2;
+        }
+
+        const sc = isActive ? 1 : isHov ? 1.04 : 0.98;
 
         return (
           <motion.div
@@ -96,26 +98,39 @@ function PolaroidCollage({ isNight }: { isNight: boolean }) {
           >
             {/* Polaroid frame */}
             <div
-              className="w-full h-full flex flex-col rounded-sm overflow-hidden"
+              className="w-full h-full flex flex-col rounded-sm overflow-hidden transition-all duration-300"
               style={{
-                background: isNight ? "#111417" : "#1a1a1a",
+                background: isNight ? "#0b1219" : "#1a1a1a",
+                border: isNight
+                  ? isActive
+                    ? "1.5px solid rgba(0, 255, 255, 0.9)"
+                    : "1.5px solid rgba(0, 255, 255, 0.4)"
+                  : "none",
                 boxShadow: isActive
                   ? isNight
-                    ? "0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,255,255,0.12)"
+                    ? "0 0 30px rgba(0,255,255,0.35), 0 20px 60px rgba(0,0,0,0.85)"
                     : "0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.12)"
-                  : "0 8px 32px rgba(0,0,0,0.5)",
+                  : isNight
+                    ? "0 0 16px rgba(0,255,255,0.15), 0 8px 32px rgba(0,0,0,0.6)"
+                    : "0 8px 32px rgba(0,0,0,0.5)",
                 padding: "8px 8px 0 8px",
               }}
             >
               {/* Photo area */}
-              <div className="relative flex-1 overflow-hidden rounded-[2px]">
+              <div
+                className="relative flex-1 overflow-hidden rounded-[2px]"
+                style={{
+                  border: isNight ? "1px solid rgba(0, 255, 255, 0.25)" : "none",
+                }}
+              >
                 <Image
                   src={card.src}
                   alt={card.label}
                   fill
                   className="object-cover"
                   style={{ objectPosition: card.objectPosition || "center" }}
-                  sizes="310px"
+                  sizes="(max-width: 640px) 260px, 310px"
+                  quality={82}
                   loading={card.id === "me" ? "eager" : "lazy"}
                 />
                 {/* Subtle inner vignette */}
@@ -144,9 +159,10 @@ function PolaroidCollage({ isNight }: { isNight: boolean }) {
                       className="text-sm font-semibold tracking-widest uppercase"
                       style={{
                         color: isNight
-                          ? "rgba(255,255,255,0.82)"
+                          ? "#00FFFF"
                           : "rgba(255,255,255,0.75)",
-                        fontFamily: "var(--font-sans)",
+                        textShadow: isNight ? "0 0 8px rgba(0,255,255,0.5)" : "none",
+                        fontFamily: isNight ? "var(--font-mono)" : "var(--font-sans)",
                         letterSpacing: "0.18em",
                       }}
                     >
@@ -162,8 +178,8 @@ function PolaroidCollage({ isNight }: { isNight: boolean }) {
                       transition={{ duration: 0.2 }}
                       className="text-[11px] tracking-widest uppercase"
                       style={{
-                        color: "rgba(255,255,255,0.35)",
-                        fontFamily: "var(--font-sans)",
+                        color: isNight ? "rgba(0,255,255,0.6)" : "rgba(255,255,255,0.35)",
+                        fontFamily: isNight ? "var(--font-mono)" : "var(--font-sans)",
                       }}
                     >
                       {card.label}
@@ -195,8 +211,8 @@ function PolaroidCollage({ isNight }: { isNight: boolean }) {
                     ? "var(--accent-primary)"
                     : "#D13030"
                   : isNight
-                  ? "rgba(255,255,255,0.2)"
-                  : "rgba(0,0,0,0.18)",
+                    ? "rgba(255,255,255,0.2)"
+                    : "rgba(0,0,0,0.18)",
               border: "none",
               cursor: "pointer",
             }}
@@ -229,6 +245,7 @@ export function AboutMe() {
     <section
       id="about"
       ref={sectionRef}
+      suppressHydrationWarning
       className="relative w-full flex flex-col justify-center min-h-screen py-24 px-4 sm:px-8 overflow-hidden"
     >
 
@@ -250,30 +267,41 @@ export function AboutMe() {
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* ── Top eyebrow ── */}
+      {/* ── Terminal Command Eyebrow ── */}
       <motion.div
         initial={{ opacity: 0, y: -12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.55 }}
+        suppressHydrationWarning
         className="w-full max-w-[1200px] mx-auto mb-10 z-10"
       >
-        <div className="flex items-center gap-3">
-          <span
-            className={`text-sm font-semibold ${
-              isNight ? "font-mono text-white" : "font-sans text-[#1A1A1A]"
-            }`}
+        <div className="inline-flex items-center gap-2 font-mono text-sm sm:text-base font-semibold tracking-wider">
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{
+              repeat: Infinity,
+              duration: 0.8,
+              ease: "linear",
+            }}
+            className={
+              isNight
+                ? "text-[var(--accent-primary)] font-bold text-base sm:text-lg select-none"
+                : "text-[#D13030] font-bold text-base sm:text-lg select-none"
+            }
           >
-            More About me
+            &gt;
+          </motion.span>
+          <span
+            className={isNight ? "text-white" : "text-[#1A1A1A]"}
+          >
+            more_about_me.exe
           </span>
           <span
-            className={`text-sm italic ${
-              isNight
-                ? "text-[var(--accent-primary)] font-mono"
-                : "text-[#D13030] font-serif"
-            }`}
+            className={`text-xs sm:text-sm font-normal ${isNight ? "text-[var(--accent-primary)] opacity-80" : "text-[#D13030] opacity-85"
+              }`}
           >
-            — Who&apos;s Behind the Terminal?
+            --whoami --verbose
           </span>
         </div>
         {/* Thin underline */}
@@ -282,10 +310,10 @@ export function AboutMe() {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-1 h-px origin-left"
+          className="mt-1.5 h-px origin-left"
           style={{
-            width: 160,
-            background: isNight ? "rgba(0,255,255,0.35)" : "rgba(209,48,48,0.35)",
+            width: 220,
+            background: isNight ? "rgba(0,255,255,0.4)" : "rgba(209,48,48,0.35)",
           }}
         />
       </motion.div>
@@ -328,8 +356,8 @@ export function AboutMe() {
           {/* Paragraphs */}
           <div className="flex flex-col gap-4 max-w-[52ch]">
             {[
-              "Soy un apasionado de la tecnología, el desarrollo de software y la innovación. Disfruto crear proyectos web, aprender nuevas tecnologías y explorar áreas como la Inteligencia Artificial, la Ciberseguridad y los sistemas emergentes que están transformando la manera en que interactuamos con el mundo digital.",
-              "Mi trayectoria comenzó explorando tecnologías frontend y backend para construir aplicaciones web modernas y eficientes. Con el tiempo, mi curiosidad me llevó a profundizar en IA, seguridad informática y arquitecturas de datos — campos que considero fundamentales para el futuro tecnológico.",
+              "Soy ingeniero en sistemas enfocado en el desarrollo de software, análisis de datos e inteligencia artificial. Disfruto diseñar y construir soluciones web, automatizar procesos y explorar nuevas tecnologías para resolver problemas de forma práctica y eficiente.",
+              "Mi experiencia comenzó con el desarrollo frontend y backend de aplicaciones web y, con el tiempo, evolucionó hacia áreas como inteligencia artificial, procesamiento y análisis de datos, automatización y ciberseguridad. Actualmente, continúo desarrollando proyectos que integran estas tecnologías para crear soluciones modernas y funcionales.",
             ].map((text, i) => (
               <motion.p
                 key={i}
@@ -371,40 +399,6 @@ export function AboutMe() {
                 {tag}
               </span>
             ))}
-          </motion.div>
-
-          {/* "Follow My Journey" button */}
-          <motion.div
-            className="mt-8"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.5 }}
-          >
-            <motion.a
-              href="#experience"
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold"
-              style={{
-                background: "transparent",
-                border: isNight
-                  ? "1px solid rgba(255,255,255,0.35)"
-                  : "1px solid rgba(0,0,0,0.3)",
-                color: isNight ? "rgba(255,255,255,0.88)" : "rgba(0,0,0,0.75)",
-                fontFamily: "var(--font-sans)",
-                letterSpacing: "0.02em",
-              }}
-            >
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{
-                  background: isNight ? "var(--accent-primary)" : "#D13030",
-                  boxShadow: isNight ? "0 0 6px var(--accent-primary)" : "none",
-                }}
-              />
-              Follow My Journey
-            </motion.a>
           </motion.div>
         </motion.div>
 

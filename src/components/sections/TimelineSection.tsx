@@ -21,11 +21,20 @@ const TIMELINE_DATA: TimelineEntry[] = [
   {
     year: "2026",
     tag: "Experience",
-    title: "Auxiliar Administrativo — Datos & IA",
+    title: "Auxiliar en Sistemas — Datos & IA",
     entity: "Fiscalía General del Estado de Chiapas",
     description:
       "Automatización de procesos internos con Python e IA local (LLMs on-premise). Desarrollo de dashboards analíticos en Streamlit y sistemas de consulta inteligente basados en RAG, reduciendo tiempos de búsqueda documental en un 70%.",
     image: "/images/ui/fiscalia.jpeg",
+  },
+  {
+    year: "2026",
+    tag: "Award",
+    title: "GCI World 2026 — Data Science & Artificial Intelligence",
+    entity: "Matsuo-Iwasawa Laboratory — The University of Tokyo",
+    description:
+      "Programa internacional intensivo en Data Science e Inteligencia Artificial, con formación práctica en Python, NumPy, Pandas, Machine Learning, evaluación de modelos, SQL, análisis de series temporales y aplicaciones de datos en contextos empresariales.",
+    image: "/images/ui/LABTOKYO.jpg",
   },
   {
     year: "2025 – 2026",
@@ -61,32 +70,38 @@ const TIMELINE_DATA: TimelineEntry[] = [
 ───────────────────────────────────────────────────────────────────────────── */
 function TagBadge({ tag, isNight }: { tag?: string; isNight: boolean }) {
   if (!tag) return null;
-  const colors: Record<string, { bg: string; text: string; border: string }> = {
+
+  const styles: Record<string, { color: string; shadowColor: string }> = {
     Experience: {
-      bg: isNight ? "rgba(0,255,255,0.08)" : "rgba(209,48,48,0.08)",
-      text: isNight ? "#00e5ff" : "#D13030",
-      border: isNight ? "rgba(0,255,255,0.22)" : "rgba(209,48,48,0.22)",
+      color: isNight ? "#ff4d4d" : "#C02020",
+      shadowColor: isNight ? "rgba(255,77,77,0.25)" : "rgba(192,32,32,0.2)",
     },
     Education: {
-      bg: isNight ? "rgba(255,0,255,0.08)" : "rgba(99,102,241,0.08)",
-      text: isNight ? "#ff66ff" : "#6366f1",
-      border: isNight ? "rgba(255,0,255,0.22)" : "rgba(99,102,241,0.22)",
+      color: isNight ? "#c084fc" : "#7c3aed",
+      shadowColor: isNight ? "rgba(192,132,252,0.25)" : "rgba(124,58,237,0.2)",
     },
     Award: {
-      bg: isNight ? "rgba(255,200,0,0.08)" : "rgba(245,158,11,0.08)",
-      text: isNight ? "#ffd700" : "#d97706",
-      border: isNight ? "rgba(255,200,0,0.22)" : "rgba(245,158,11,0.22)",
+      color: isNight ? "#fbbf24" : "#b45309",
+      shadowColor: isNight ? "rgba(251,191,36,0.25)" : "rgba(180,83,9,0.2)",
     },
   };
-  const c = colors[tag] ?? colors.Experience;
+
+  const s = styles[tag] ?? styles.Experience;
+
   return (
     <span
-      className="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold tracking-widest uppercase mb-2"
       style={{
-        background: c.bg,
-        color: c.text,
-        border: `1px solid ${c.border}`,
-        fontFamily: "var(--font-mono)",
+        fontFamily: "'Georgia', serif",
+        fontStyle: "italic",
+        fontWeight: 700,
+        fontSize: "0.72rem",
+        letterSpacing: "0.06em",
+        textTransform: "uppercase",
+        color: s.color,
+        textShadow: `0 0 12px ${s.shadowColor}`,
+        display: "block",
+        marginBottom: "0.4rem",
+        lineHeight: 1,
       }}
     >
       {tag}
@@ -233,6 +248,7 @@ export function TimelineSection() {
     <section
       id="experience"
       ref={containerRef}
+      suppressHydrationWarning
       className="relative w-full flex flex-col items-center py-24 px-4 overflow-hidden"
     >
       {/* Subtle dot-grid */}
@@ -257,10 +273,17 @@ export function TimelineSection() {
         className="w-full text-center mb-16 z-20 pointer-events-none"
       >
         <p
-          className={`text-[11px] tracking-[0.35em] uppercase mb-3 ${isNight ? "font-mono text-[var(--accent-primary)]" : "font-sans text-[#D13030]"
+          className={`inline-flex items-center justify-center gap-1.5 text-[11px] tracking-[0.35em] uppercase mb-3 ${isNight ? "font-mono text-[var(--accent-primary)]" : "font-sans text-[#D13030]"
             }`}
         >
-          CAREER
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+            className="font-bold select-none"
+          >
+            &gt;
+          </motion.span>
+          <span>CAREER</span>
         </p>
 
         <h2

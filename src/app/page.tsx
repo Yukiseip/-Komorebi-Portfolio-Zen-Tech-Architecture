@@ -26,6 +26,10 @@ const FooterSection = dynamic(
   () => import("@/components/sections/FooterSection").then((m) => m.FooterSection),
   { ssr: true }
 );
+const ContactSection = dynamic(
+  () => import("@/components/sections/ContactSection").then((m) => m.ContactSection),
+  { ssr: true }
+);
 
 export default function Home() {
   return (
@@ -41,6 +45,8 @@ export default function Home() {
       <TimelineSection />
       <SectionDivider />
       <YukiseiSection />
+      <SectionDivider />
+      <ContactSection />
       <FooterSection />
       <DialogueNovelLoader />
     </main>

@@ -37,7 +37,7 @@ const PROJECTS: Record<Category, Project[]> = {
       title: "Yukisei Portfolio",
       description: "Portfolio Zen-Tech con motor RPG-IA, temas dinámicos y audio interactivo.",
       stack: ["Next.js", "TypeScript", "Framer Motion"],
-      image: "/images/projects/Project_1.png",
+      image: "/images/projects/Proyecto1.jpg",
       linkDemo: "https://yukisei-systems.vercel.app/",
       linkCode: "https://github.com/Yukiseip/-Komorebi-Portfolio-Zen-Tech-Architecture.git",
     },
@@ -46,25 +46,25 @@ const PROJECTS: Record<Category, Project[]> = {
       title: "CEDAL Koha",
       description: "Automatización híbrida para biblioteca ILCE integrada en el core de Koha LMS.",
       stack: ["Python", "SQL", "Docker"],
-      image: "/images/projects/Project_03.png",
+      image: "/images/projects/Proyecto3.jpg",
       linkDemo: "https://cedal-koha.ilce.edu.mx/",
       linkCode: "#",
     },
     {
       id: "a3",
-      title: "Fintech Dashboard",
-      description: "Dashboard analítico para visualización de datos financieros en tiempo real.",
-      stack: ["React", "D3.js", "FastAPI"],
-      image: "/images/projects/Project_02.png",
+      title: "Moze Café POS",
+      description: "Plataforma POS full-stack para operaciones de café: ventas, inventario, turnos de caja, analytics y administración segura.",
+      stack: ["React", "Spring Boot", "JWT", "PostgreSQL"],
+      image: "/images/projects/Proyecto4.jpg",
       linkDemo: "#",
-      linkCode: "#",
+      linkCode: "https://github.com/Yukiseip/POS-Moze-Cafe",
     },
     {
       id: "a4",
       title: "CV Engine",
       description: "Plataforma ATS-simulada con análisis semántico de skills y recomendaciones LLM.",
       stack: ["FastAPI", "React", "Qdrant"],
-      image: "/images/projects/Project_04.png",
+      image: "/images/projects/Proyecto2.jpg",
       linkDemo: "#",
       linkCode: "https://github.com/Yukiseip/CV-Engine",
     },
@@ -239,8 +239,80 @@ function GhostTabs({
   );
 }
 
+import {
+  SiNextdotjs,
+  SiTypescript,
+  SiFramer,
+  SiPython,
+  SiDocker,
+  SiReact,
+  SiFastapi,
+  SiTensorflow,
+  SiOpencv,
+  SiCplusplus,
+  SiNvidia,
+  SiApacheairflow,
+  SiApachespark,
+  SiScikitlearn,
+  SiDbt,
+  SiPostgresql,
+  SiStreamlit,
+  SiTerraform,
+  SiPlotly,
+  SiAseprite,
+  SiBlender,
+  SiGodotengine,
+  SiJavascript,
+  SiSpringboot,
+  SiJsonwebtokens,
+} from "react-icons/si";
+
+import { FaDatabase, FaBrain, FaCode, FaExternalLinkAlt, FaGithub, FaPalette, FaImage, FaFilm } from "react-icons/fa";
+import { TbWaveSine, TbCpu } from "react-icons/tb";
+
 /* ─────────────────────────────────────────────────────────────────────────────
-   PROJECT CARD — full-bleed image, hover darkens + shows two action buttons
+   TECH ICON HELPER
+───────────────────────────────────────────────────────────────────────────── */
+function getTechIcon(name: string) {
+  const key = name.toLowerCase();
+  if (key.includes("next")) return <SiNextdotjs className="text-white" />;
+  if (key.includes("typescript")) return <SiTypescript className="text-[#3178C6]" />;
+  if (key.includes("javascript")) return <SiJavascript className="text-[#F7DF1E]" />;
+  if (key.includes("framer")) return <SiFramer className="text-[#0055FF]" />;
+  if (key.includes("python")) return <SiPython className="text-[#3776AB]" />;
+  if (key.includes("sql") || key.includes("duckdb")) return <FaDatabase className="text-[#E38C00]" />;
+  if (key.includes("docker")) return <SiDocker className="text-[#2496ED]" />;
+  if (key.includes("react")) return <SiReact className="text-[#61DAFB]" />;
+  if (key.includes("fastapi")) return <SiFastapi className="text-[#05998B]" />;
+  if (key.includes("spring")) return <SiSpringboot className="text-[#6DB33F]" />;
+  if (key.includes("jwt")) return <SiJsonwebtokens className="text-[#D63AFF]" />;
+  if (key.includes("qdrant") || key.includes("groq") || key.includes("spacy") || key.includes("sentence") || key.includes("nlp") || key.includes("llm")) return <FaBrain className="text-[#A855F7]" />;
+  if (key.includes("tensor")) return <SiTensorflow className="text-[#FF6F00]" />;
+  if (key.includes("opencv")) return <SiOpencv className="text-[#5C3EE8]" />;
+  if (key.includes("c++")) return <SiCplusplus className="text-[#00599C]" />;
+  if (key.includes("cuda")) return <SiNvidia className="text-[#76B900]" />;
+  if (key.includes("airflow")) return <SiApacheairflow className="text-[#017CEE]" />;
+  if (key.includes("spark")) return <SiApachespark className="text-[#E25A1C]" />;
+  if (key.includes("scikit")) return <SiScikitlearn className="text-[#F7931E]" />;
+  if (key.includes("dbt")) return <SiDbt className="text-[#FF694B]" />;
+  if (key.includes("postgres")) return <SiPostgresql className="text-[#4169E1]" />;
+  if (key.includes("streamlit")) return <SiStreamlit className="text-[#FF4B4B]" />;
+  if (key.includes("geopandas")) return <FaDatabase className="text-[#139C5A]" />;
+  if (key.includes("terraform")) return <SiTerraform className="text-[#844FBA]" />;
+  if (key.includes("plotly") || key.includes("d3")) return <SiPlotly className="text-[#3F4F75]" />;
+  if (key.includes("aseprite")) return <SiAseprite className="text-[#7D54C1]" />;
+  if (key.includes("blender")) return <SiBlender className="text-[#F5792A]" />;
+  if (key.includes("after effects")) return <FaFilm className="text-[#9999FF]" />;
+  if (key.includes("photoshop") || key.includes("lightroom")) return <FaImage className="text-[#31A8FF]" />;
+  if (key.includes("adobe")) return <FaPalette className="text-[#FF0000]" />;
+  if (key.includes("capture one")) return <FaCode className="text-[#2563EB]" />;
+  if (key.includes("max") || key.includes("supercollider") || key.includes("audio")) return <TbWaveSine className="text-[#06B6D4]" />;
+  if (key.includes("godot") || key.includes("gdscript")) return <SiGodotengine className="text-[#478CBF]" />;
+  return <TbCpu className="text-white/70" />;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PROJECT CARD — 3D Flip Card on Hover
 ───────────────────────────────────────────────────────────────────────────── */
 function ProjectCard({
   project,
@@ -251,185 +323,175 @@ function ProjectCard({
   isNight: boolean;
   index: number;
 }) {
-  const [hovered, setHovered] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   const hasDemo = project.linkDemo !== "#";
   const hasCode = project.linkCode !== "#";
 
   return (
     <motion.div
-      className="relative w-full rounded-2xl overflow-hidden cursor-pointer"
-      style={{
-        // On mobile use a taller fixed ratio so content is readable;
-        // on desktop keep 16/9
-        aspectRatio: "4/3",
-        border: isNight
-          ? "1px solid rgba(255,255,255,0.07)"
-          : "1px solid rgba(0,0,0,0.08)",
-      }}
+      className="relative w-full h-[280px] sm:h-[320px] [perspective:1000px] cursor-pointer group select-none"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+      onClick={() => setIsFlipped((prev) => !prev)}
     >
-      {/* Full-bleed image */}
-      <Image
-        src={project.image}
-        alt={project.title}
-        fill
-        className="object-cover"
-        style={{
-          transform: hovered ? "scale(1.05)" : "scale(1)",
-          transition: "transform 0.55s cubic-bezier(0.22,1,0.36,1)",
-        }}
-        sizes="(max-width: 640px) 100vw, 50vw"
-        loading="lazy"
-      />
-
-      {/* Always-present strong gradient so bottom text is always readable */}
+      {/* 3D Flip Card Container */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="w-full h-full relative duration-700 [transform-style:preserve-3d] rounded-2xl"
         style={{
-          background:
-            "linear-gradient(to top, rgba(4,8,16,0.98) 0%, rgba(4,8,16,0.65) 42%, rgba(4,8,16,0.08) 100%)",
-          transition: "opacity 0.35s ease",
+          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transition: "transform 0.65s cubic-bezier(0.23, 1, 0.32, 1)",
         }}
-      />
+      >
+        {/* ─── FRONT FACE ─── */}
+        <div
+          className={`absolute inset-0 w-full h-full rounded-2xl overflow-hidden [backface-visibility:hidden] [transform:rotateY(0deg)] ${
+            isNight
+              ? "border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+              : "border border-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
+          }`}
+        >
+          {/* Full Clear Image */}
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, 50vw"
+            loading="lazy"
+          />
 
-      {/* Hover darkening overlay */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        style={{ background: "rgba(2,5,12,0.42)" }}
-      />
-
-      {/* Bottom info — always visible */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-10 z-10">
-        {/* Title + arrow icon */}
-        <div className="flex items-start justify-between gap-2 mb-1.5">
-          <h3
-            className="text-white font-bold leading-tight"
-            style={{
-              fontSize: "clamp(0.82rem, 2.5vw, 1.05rem)",
-              fontFamily: "var(--font-sans)",
-            }}
-          >
-            {project.title}
-          </h3>
-          <svg
-            width="13"
-            height="13"
-            viewBox="0 0 13 13"
-            fill="none"
-            stroke="rgba(255,255,255,0.45)"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="flex-shrink-0 mt-0.5"
-          >
-            <path d="M2 11L11 2M11 2H5M11 2v6" />
-          </svg>
+          {/* Bottom Title Bar — display serif, no dot, no button */}
+          <div className="absolute bottom-0 inset-x-0 px-4 pb-4 pt-10 bg-gradient-to-t from-black/90 via-black/55 to-transparent">
+            <h3
+              style={{
+                fontFamily: "'Georgia', 'Playfair Display', serif",
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+                fontSize: "clamp(1rem, 2.2vw, 1.2rem)",
+                textShadow: "0 2px 12px rgba(0,0,0,0.7)",
+                lineHeight: 1.2,
+              }}
+              className="text-white"
+            >
+              {project.title}
+            </h3>
+          </div>
         </div>
 
-        <p
-          className="leading-snug mb-2.5"
+        {/* ─── BACK FACE ─── */}
+        <div
+          className="absolute inset-0 w-full h-full rounded-2xl p-5 sm:p-6 flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)]"
           style={{
-            color: "rgba(200,215,235,0.72)",
-            fontSize: "clamp(0.65rem, 1.8vw, 0.78rem)",
-            fontFamily: "var(--font-sans)",
+            background: isNight
+              ? "linear-gradient(145deg, #1a0e00 0%, #2d1a00 35%, #3d2200 65%, #1a0e00 100%)"
+              : "linear-gradient(145deg, #2c1a00 0%, #3d2300 35%, #5a3200 65%, #2c1a00 100%)",
+            border: isNight
+              ? "1px solid rgba(200,140,40,0.45)"
+              : "1px solid rgba(200,140,40,0.35)",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,200,80,0.12)",
           }}
         >
-          {project.description}
-        </p>
+          {/* Top: Title & Description */}
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-2 pb-2" style={{ borderBottom: "1px solid rgba(200,140,40,0.3)" }}>
+              <h3
+                style={{
+                  fontFamily: "'Georgia', 'Playfair Display', serif",
+                  fontWeight: 700,
+                  letterSpacing: "0.03em",
+                  color: "#F5C842",
+                  fontSize: "clamp(0.95rem, 2vw, 1.1rem)",
+                  textShadow: "0 0 18px rgba(245,200,66,0.35)",
+                }}
+              >
+                {project.title}
+              </h3>
+              <span className="text-[9px] font-mono uppercase tracking-widest" style={{ color: "rgba(200,140,40,0.6)" }}>
+                PROYECTO
+              </span>
+            </div>
 
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-1.5">
-          {project.stack.map((tech) => (
+            <p className="text-xs sm:text-sm leading-relaxed line-clamp-3 mb-2" style={{ color: "rgba(255,235,180,0.88)" }}>
+              {project.description}
+            </p>
+          </div>
+
+          {/* Middle: Tech Stack with Icons */}
+          <div className="my-1">
             <span
-              key={tech}
-              className="px-2 py-0.5 rounded text-[10px] font-medium tracking-wide"
-              style={{
-                background: "rgba(255,255,255,0.09)",
-                border: "1px solid rgba(255,255,255,0.14)",
-                color: "rgba(210,225,245,0.82)",
-                fontFamily: "var(--font-mono)",
-              }}
+              className="text-[10px] font-mono uppercase tracking-wider block mb-2 font-semibold"
+              style={{ color: "rgba(200,140,40,0.7)" }}
             >
-              {tech}
+              Tecnologías
             </span>
-          ))}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              {project.stack.map((tech) => (
+                <div
+                  key={tech}
+                  className="flex items-center gap-1.5 text-xs transition-transform hover:scale-105"
+                  title={tech}
+                >
+                  <span className="text-base sm:text-lg flex-shrink-0" aria-hidden="true">
+                    {getTechIcon(tech)}
+                  </span>
+                  <span className="font-mono text-[11px]" style={{ color: "rgba(255,220,150,0.85)" }}>
+                    {tech}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom: Action Buttons */}
+          <div
+            className="flex items-center gap-2.5 pt-3"
+            style={{ borderTop: "1px solid rgba(200,140,40,0.3)" }}
+          >
+            {hasDemo && (
+              <a
+                href={project.linkDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition-all"
+                style={{
+                  background: "rgba(200,140,40,0.18)",
+                  border: "1px solid rgba(200,140,40,0.45)",
+                  color: "#F5C842",
+                }}
+              >
+                <FaExternalLinkAlt size={10} />
+                <span>Live Demo</span>
+              </a>
+            )}
+            {hasCode && (
+              <a
+                href={project.linkCode}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition-all"
+                style={{
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(200,140,40,0.25)",
+                  color: "rgba(255,220,150,0.85)",
+                }}
+              >
+                <FaGithub size={13} />
+                <span>Código</span>
+              </a>
+            )}
+            {!hasDemo && !hasCode && (
+              <span className="text-xs italic font-mono" style={{ color: "rgba(200,140,40,0.55)" }}>
+                Proyecto interno / privado
+              </span>
+            )}
+          </div>
         </div>
       </div>
-
-      {/* Hover action buttons — centered over image (desktop only) */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            key="hover-actions"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute inset-0 hidden sm:flex items-center justify-center gap-3 z-20 pointer-events-none"
-            style={{ paddingBottom: "5rem" }}
-          >
-            {/* Live button */}
-            <motion.a
-              href={hasDemo ? project.linkDemo : undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={(e) => !hasDemo && e.preventDefault()}
-              className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all"
-              style={{
-                background: "rgba(255,255,255,0.14)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,255,255,0.28)",
-                color: hasDemo ? "#fff" : "rgba(255,255,255,0.38)",
-                fontFamily: "var(--font-sans)",
-                cursor: hasDemo ? "pointer" : "not-allowed",
-                letterSpacing: "0.02em",
-              }}
-              aria-label="Ver en live"
-            >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1.5 10.5L10.5 1.5M10.5 1.5H5.5M10.5 1.5v5" />
-              </svg>
-              Live
-            </motion.a>
-
-            {/* GitHub button */}
-            <motion.a
-              href={hasCode ? project.linkCode : undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={(e) => !hasCode && e.preventDefault()}
-              className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all"
-              style={{
-                background: "rgba(255,255,255,0.14)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,255,255,0.28)",
-                color: hasCode ? "#fff" : "rgba(255,255,255,0.38)",
-                fontFamily: "var(--font-sans)",
-                cursor: hasCode ? "pointer" : "not-allowed",
-                letterSpacing: "0.02em",
-              }}
-              aria-label="Ver código en GitHub"
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-              </svg>
-              GitHub
-            </motion.a>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
@@ -480,6 +542,7 @@ export function ProjectsSection() {
   return (
     <section
       id="projects"
+      suppressHydrationWarning
       className="relative w-full flex flex-col items-center py-24 px-4 overflow-hidden"
     >
       {/* Subtle dot-grid texture */}
@@ -504,11 +567,18 @@ export function ProjectsSection() {
         className="w-full text-center mb-8 z-20 pointer-events-none"
       >
         <p
-          className={`text-[11px] tracking-[0.35em] uppercase mb-3 ${
+          className={`inline-flex items-center justify-center gap-1.5 text-[11px] tracking-[0.35em] uppercase mb-3 ${
             isNight ? "font-mono text-[var(--accent-primary)]" : "font-sans text-[#D13030]"
           }`}
         >
-          SELECTED WORK
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+            className="font-bold select-none"
+          >
+            &gt;
+          </motion.span>
+          <span>SELECTED WORK</span>
         </p>
 
         <h2

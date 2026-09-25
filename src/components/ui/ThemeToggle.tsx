@@ -93,7 +93,7 @@ export function ThemeToggle() {
     <motion.button
       onClick={handleToggle}
       whileTap={{ scale: 0.88 }}
-      aria-label="Toggle Theme"
+      aria-label={isDay ? "MODE: DAY — Cambiar a Modo Noche" : "MODE: NIGHT — Cambiar a Modo Día"}
       title={isDay ? "Activar Modo Noche" : "Activar Modo Día"}
       className="fixed top-6 right-6 z-[9999] cursor-pointer"
       style={{ WebkitTapHighlightColor: "transparent" }}
@@ -101,6 +101,7 @@ export function ThemeToggle() {
       {/* Outer orbit ring */}
       <motion.div
         className="relative flex items-center justify-center w-14 h-14"
+        aria-hidden="true"
         animate={ isDay
           ? { rotate: [0, 360] }
           : { rotate: [360, 0] }
@@ -172,6 +173,7 @@ export function ThemeToggle() {
 
       {/* Tooltip label */}
       <motion.span
+        aria-hidden="true"
         className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-widest whitespace-nowrap pointer-events-none
           ${isDay ? "text-[#D13030] font-serif" : "text-[var(--accent-primary)] font-mono"}`}
         initial={{ opacity: 0 }}

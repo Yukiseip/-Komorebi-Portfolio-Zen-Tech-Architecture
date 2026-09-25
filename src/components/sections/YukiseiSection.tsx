@@ -195,6 +195,7 @@ export function YukiseiSection() {
   return (
     <section
       id="yukisei"
+      suppressHydrationWarning
       className="relative w-full flex flex-col items-center py-24 px-4 overflow-hidden"
     >
       {/* Subtle radial glow background */}
@@ -230,11 +231,18 @@ export function YukiseiSection() {
         className="w-full max-w-[1100px] mx-auto text-center mb-16 z-10"
       >
         <p
-          className={`text-[11px] tracking-[0.35em] uppercase mb-3 ${
+          className={`inline-flex items-center justify-center gap-1.5 text-[11px] tracking-[0.35em] uppercase mb-3 ${
             isNight ? "font-mono text-[var(--accent-primary)]" : "font-sans text-[#D13030]"
           }`}
         >
-          IA
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+            className="font-bold select-none"
+          >
+            &gt;
+          </motion.span>
+          <span>IA</span>
         </p>
 
         <h2

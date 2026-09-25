@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { motion, useScroll, useMotionValueEvent, useSpring } from "framer-motion";
-import { useState, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const navItems = [
   { name: "Inicio", targetId: "home" },
@@ -15,10 +15,15 @@ const navItems = [
 
 export function Sidebar() {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 1000, damping: 100 });
   const lastScrollTime = useRef(0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleScroll = useCallback(() => {
     const now = Date.now();
@@ -59,11 +64,14 @@ export function Sidebar() {
     }
   };
 
+  if (!mounted) return null;
+
   return (
     <motion.aside
       initial={{ x: -100 }}
       animate={{ x: 0 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+      suppressHydrationWarning
       className={`fixed top-0 left-0 bottom-0 z-[100] w-[180px] border-r backdrop-blur-xl hidden md:flex flex-col justify-between py-12 overflow-x-hidden
         ${theme === "sakura" ? "bg-white/40 border-[#1A1A1A]/10 text-[#1A1A1A]" : "bg-[#050505]/60 border-[var(--accent-primary)]/20 text-[var(--text-primary)]"}
       `}
@@ -77,15 +85,8 @@ export function Sidebar() {
         />
       </div>
 
-      {/* TOP SECTION: IDENTIFIER */}
-      <div className="px-5 cursor-pointer flex flex-col whitespace-nowrap" onClick={() => handleNavClick("home")}>
-        <span className={`text-xl md:text-2xl uppercase tracking-widest leading-none ${theme === "sakura" ? "font-serif font-black" : "font-mono font-bold text-glow-cyan"}`}>
-          SYS
-        </span>
-        <span className={`text-[9px] mt-2 opacity-50 uppercase tracking-widest ${theme === 'sakura' ? 'font-sans' : 'font-mono'}`}>
-          .CORE
-        </span>
-      </div>
+      {/* TOP SECTION: SPACER */}
+      <div className="h-6" />
 
       {/* MIDDLE SECTION: LINKS */}
       <nav className="flex flex-col gap-8 w-full">
@@ -119,7 +120,7 @@ export function Sidebar() {
           v1.0.0 // LIVE
         </span>
         <span className={`text-[9px] uppercase tracking-widest opacity-40 mt-1 block ${theme === 'sakura' ? 'font-sans text-black' : 'font-mono text-[var(--accent-primary)]'}`}>
-          LAT: NaN // LONG: NaN
+          CDMX // 19.43°N 99.13°W
         </span>
       </div>
 

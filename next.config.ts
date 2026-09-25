@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: [
       "framer-motion",
       "lucide-react",
+      "react-icons",
       "@google/generative-ai",
     ],
   },
